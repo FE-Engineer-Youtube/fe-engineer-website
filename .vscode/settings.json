@@ -1,0 +1,9 @@
+{
+    "editor.fontSize": 16,
+    "editor.tabSize": 2,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "always",
+        "source.fixAll": true
+    },
+    "editor.formatOnSave": true
+}
