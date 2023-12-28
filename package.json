@@ -8,7 +8,7 @@
     "dev": "remix dev --manual",
     "start-remix": "PORT=3002 remix-serve ./build/index.js",
     "start": "pm2 start --name=fe --update-env pnpm -- remix",
-    "remix": "pnpm build && start-remix",
+    "remix": "pnpm build && pnpm start-remix",
     "stop": "pm2 delete fe",
     "typecheck": "tsc"
   },
