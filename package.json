@@ -10,12 +10,26 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@mantine/carousel": "^7.3.2",
+    "@mantine/code-highlight": "^7.3.2",
     "@mantine/core": "7.3.2",
+    "@mantine/dates": "^7.3.2",
+    "@mantine/dropzone": "^7.3.2",
+    "@mantine/form": "^7.3.2",
     "@mantine/hooks": "7.3.2",
+    "@mantine/modals": "^7.3.2",
+    "@mantine/notifications": "^7.3.2",
+    "@mantine/tiptap": "^7.3.2",
     "@remix-run/css-bundle": "^2.2.0",
     "@remix-run/node": "^2.2.0",
     "@remix-run/react": "^2.2.0",
     "@remix-run/serve": "^2.2.0",
+    "@tabler/icons-react": "^2.44.0",
+    "@tiptap/extension-link": "^2.1.13",
+    "@tiptap/react": "^2.1.13",
+    "@tiptap/starter-kit": "^2.1.13",
+    "dayjs": "^1.11.10",
+    "embla-carousel-react": "8.0.0-rc17",
     "isbot": "^3.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -26,7 +40,7 @@
     "@types/react": "^18.2.35",
     "@types/react-dom": "^18.2.14",
     "eslint": "^8.53.0",
-    "postcss": "^8.4.31",
+    "postcss": "^8.4.32",
     "postcss-preset-mantine": "1.12.0",
     "postcss-simple-vars": "^7.0.1",
     "typescript": "^5.2.2"
@@ -34,5 +48,5 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "packageManager": "yarn@4.0.1"
+  "packageManager": "pnpm"
 }
