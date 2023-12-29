@@ -1,9 +1,11 @@
 .videocard {
   max-width: 600px;
+  width: 100%;
 }
 
 .ytiframe {
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
   margin: 0;
   padding: 0;
   height: fit-content;
