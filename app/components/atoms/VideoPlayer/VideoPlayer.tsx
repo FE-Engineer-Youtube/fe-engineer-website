@@ -1,18 +1,19 @@
 import { Card, Text } from '@mantine/core'
-import { useEffect, useRef, useState } from 'react'
+import { useResizeObserver } from '@mantine/hooks'
+import { useEffect, useState } from 'react'
 import classes from './VideoPlayer.module.css'
 
 const VideoPlayer = ({ data }: any) => {
-  const ref = useRef<HTMLInputElement>(null)
   const [height, setHeight] = useState(0)
+  const [ref, rect] = useResizeObserver()
 
   useEffect(() => {
-    if (ref.current?.offsetWidth !== undefined) {
-      setHeight((ref?.current?.offsetWidth / 16) * 9)
+    if (rect.width !== undefined) {
+      setHeight((rect.width / 16) * 9)
     } else {
       setHeight(0)
     }
-  }, [])
+  }, [rect])
 
   return (
     <>
