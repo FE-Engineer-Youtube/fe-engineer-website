@@ -1,9 +1,11 @@
 {
-    "editor.fontSize": 16,
-    "editor.tabSize": 2,
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": "always",
-        "source.fixAll": true
-    },
-    "editor.formatOnSave": true
+  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  "editor.fontSize": 16,
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
+  "editor.formatOnSave": true,
+  "javascript.format.semicolons": "remove",
+  "vs-code-prettier-eslint.prettierLast": true
 }
