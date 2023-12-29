@@ -1,7 +1,7 @@
-import { ColorSchemeScript, MantineProvider } from '@mantine/core'
-import '@mantine/core/styles.css'
-import { cssBundleHref } from '@remix-run/css-bundle'
-import type { LinksFunction } from '@remix-run/node'
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
+import { cssBundleHref } from "@remix-run/css-bundle";
+import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -9,7 +9,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from '@remix-run/react'
+} from "@remix-run/react";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
@@ -26,7 +26,7 @@ export default function App() {
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider>
+        <MantineProvider defaultColorScheme="auto">
           <Outlet />
           <ScrollRestoration />
           <Scripts />
