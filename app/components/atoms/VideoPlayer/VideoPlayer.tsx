@@ -1,6 +1,7 @@
 import { Card, Text } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
 import { useEffect, useState } from 'react'
+import { sixteenByNine } from '~/utils/utils'
 import classes from './VideoPlayer.module.css'
 
 const VideoPlayer = ({ data }: any) => {
@@ -9,7 +10,7 @@ const VideoPlayer = ({ data }: any) => {
 
   useEffect(() => {
     if (rect.width !== undefined) {
-      setHeight((rect.width / 16) * 9)
+      setHeight(sixteenByNine(rect.width))
     } else {
       setHeight(0)
     }

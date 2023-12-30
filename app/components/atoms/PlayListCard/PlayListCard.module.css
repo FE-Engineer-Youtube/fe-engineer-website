@@ -1,0 +1,15 @@
+.card {
+  max-width: 400px;
+  width: 100%;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  display: block;
+}
+
+.image {
+  width: 100%;
+}
