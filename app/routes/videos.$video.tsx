@@ -1,5 +1,6 @@
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
-import { Link, redirect, useLoaderData } from '@remix-run/react'
+import { redirect } from '@remix-run/node'
+import { Link, useLoaderData } from '@remix-run/react'
 import LargeVideoPlayer from '~/components/atoms/LargeVideoPlayer'
 import Splash from '~/components/organisms/splash'
 import { getVideo } from '~/models/fetchYT.server'

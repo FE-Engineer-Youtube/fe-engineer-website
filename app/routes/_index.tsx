@@ -45,7 +45,7 @@ export default function Index() {
       <Splash message="Welcome Homelabbers and Engineers!" />
       {YTVideoData !== null && (
         <Group align="center" justify="center">
-          {YTVideoData.items.map((video: any, index: number) => {
+          {YTVideoData?.items?.map((video: any, index: number) => {
             return <VideoPlayer key={index} data={video} />
           })}
         </Group>
