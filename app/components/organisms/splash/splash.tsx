@@ -1,7 +1,11 @@
 import { Stack, Text, Title } from '@mantine/core'
 import classes from './splash.module.css'
 
-const Splash = () => {
+const Splash = ({ message }: any) => {
+  const displayText = {
+    site: 'FE-Engineer.com',
+    message: message || 'Wow, such empty...less empty than before though...',
+  }
   return (
     <>
       <Stack align="center" justify="center" p="lg" pt={64} pb={128}>
@@ -10,13 +14,13 @@ const Splash = () => {
             inherit
             variant="gradient"
             component="span"
-            gradient={{ from: 'green', to: 'blue' }}
+            gradient={{ from: 'ytRed', to: 'blue' }}
           >
-            FE-Engineer.com
+            {displayText.site}
           </Text>
         </Title>
         <Text ta="center" size="lg" mt={32}>
-          Wow, such empty...less empty than yesterday though...
+          {displayText.message}
         </Text>
       </Stack>
     </>
