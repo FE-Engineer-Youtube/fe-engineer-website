@@ -1,23 +1,29 @@
 import { Group } from '@mantine/core'
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { Link, useLoaderData } from '@remix-run/react'
 import VideoPlayer from '~/components/atoms/VideoPlayer'
 import Splash from '~/components/organisms/splash'
 import { getRecentVideos } from '~/models/fetchYT.server'
 import { cache } from '~/utils/db.server'
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = (data: any) => {
   return [
     { title: 'FE-Engineer' },
     {
       name: 'description',
       content:
-        'Welcome to the website for FE-Engineer on Youtube.  Learn to build software and hardware at home to use AI, automation, and web tools to improve your life!',
+        'Welcome to the website for FE-Engineer on Youtube.  Learn to build software and hardware at home to use AI, automation, and web tools for just about everything!',
+    },
+    {
+      name: 'keywords',
+      content: `Homelab, Software Engineering, How-to, Networking, Proxies, AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding`,
     },
   ]
 }
 
-// export const links: LinksFunction = () => [...linkStyles()]
+export const handle = {
+  breadcrumb: () => <Link to="/">Home</Link>,
+}
 
 export const loader: LoaderFunction = async () => {
   let YTVideoData
@@ -26,24 +32,25 @@ export const loader: LoaderFunction = async () => {
     YTVideoData = await cache.get('homepage-videos')
   } else {
     YTVideoData = await getRecentVideos(2)
-    cache.set('homepage-videos', YTVideoData, 60 * 10)
+    cache.set('homepage-videos', YTVideoData, 60 * 60 * 2)
   }
 
-  // let data = { YTVideoData }
   return { YTVideoData }
 }
 
 export default function Index() {
   const { YTVideoData }: any = useLoaderData()
   return (
-    <div className="index">
-      <Splash />
-      <Group align="center" justify="center">
-        {YTVideoData !== undefined &&
-          YTVideoData.items.map((video: any, index: any) => {
+    <>
+      <Splash message="Welcome Homelabbers and Engineers!" />
+      {YTVideoData !== null && (
+        <Group align="center" justify="center">
+          {YTVideoData.items.map((video: any, index: number) => {
             return <VideoPlayer key={index} data={video} />
           })}
-      </Group>
-    </div>
+        </Group>
+      )}
+      {YTVideoData === null && <Splash />}
+    </>
   )
 }

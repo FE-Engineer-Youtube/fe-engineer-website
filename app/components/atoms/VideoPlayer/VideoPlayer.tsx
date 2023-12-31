@@ -1,6 +1,7 @@
 import { Card, Text } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
 import { useEffect, useState } from 'react'
+import { sixteenByNine } from '~/utils/utils'
 import classes from './VideoPlayer.module.css'
 
 const VideoPlayer = ({ data }: any) => {
@@ -9,27 +10,32 @@ const VideoPlayer = ({ data }: any) => {
 
   useEffect(() => {
     if (rect.width !== undefined) {
-      setHeight((rect.width / 16) * 9)
+      setHeight(sixteenByNine(rect.width))
     } else {
       setHeight(0)
     }
   }, [rect])
 
+  const displayText = {
+    title: `YouTube Video for: ${data?.snippet?.title || 'Video Title'}`,
+    description: data?.snippet?.description || 'Description',
+  }
+
   return (
     <>
-      <Card className={classes.videocard} p={32}>
-        <div className={classes.ytiframe} ref={ref}>
+      <Card className={classes.videocard} padding="md" withBorder>
+        <Card.Section className={classes.ytiframe} ref={ref}>
           <iframe
-            title={`YouTube Video for: ${data?.snippet?.title}`}
+            title={displayText.title}
             width="100%"
             height={height}
             src={`https://www.youtube.com/embed/${data.id.videoId}`}
             frameBorder={0}
             allowFullScreen
           />
-        </div>
-        <Text ta="center" size="lg" maw={580} mx="auto" mt="xl">
-          {data?.snippet?.description}
+        </Card.Section>
+        <Text ta="center" size="lg" mt="xl">
+          {displayText.description}
         </Text>
       </Card>
     </>
