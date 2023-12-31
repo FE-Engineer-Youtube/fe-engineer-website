@@ -27,7 +27,6 @@ const LargeVideoPlayer = ({ data }: any) => {
     ).toLocaleDateString()}`,
   }
 
-  console.log(data)
   return (
     <>
       <Card className={classes.videocard} padding="md" withBorder>

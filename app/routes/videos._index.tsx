@@ -1,4 +1,4 @@
-import { Button, Group, Text } from '@mantine/core'
+import { Group, Text, Title } from '@mantine/core'
 import { usePagination } from '@mantine/hooks'
 import type {
   LoaderFunction,
@@ -6,8 +6,8 @@ import type {
   MetaFunction,
 } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 import PlayListItemCard from '~/components/atoms/PlayListItemCard'
+import Pagination from '~/components/molecules/pagination'
 import Splash from '~/components/organisms/splash'
 import { getAllVideos } from '~/models/fetchYT.server'
 import { cache } from '~/utils/db.server'
@@ -38,13 +38,17 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
     videosData = await cache.get(`videos-${results}-${page}`)
   } else {
     videosData = await getAllVideos(results, pageToken)
-    cache.set(`videos-${results}-${page}`, videosData, 60 * 60 * 60)
+    cache.set(`videos-${results}-${page}`, videosData, 60 * 60)
   }
   return { videosData, page }
 }
 
 export const handle = {
   breadcrumb: () => <Link to="/videos">Videos</Link>,
+}
+
+const displayText = {
+  title: `FE-Engineer Youtube Videos`,
 }
 
 export default function Playlist() {
@@ -56,55 +60,24 @@ export default function Playlist() {
 
   return (
     <>
+      <Title ta="center" order={1} pt={64} pb={48}>
+        <Text
+          inherit
+          variant="gradient"
+          component="span"
+          gradient={{ from: 'ytRed', to: 'blue' }}
+        >
+          {displayText.title}
+        </Text>
+      </Title>
       {videosData !== null && (
         <>
-          <Group w="100%" justify="center" mb="md">
-            <Button
-              disabled={page === 1}
-              color="ytRed"
-              size="xs"
-              component={Link}
-              to={`/videos?page=${page - 1}&pageToken=${
-                videosData?.prevPageToken
-              }`}
-            >
-              <IconArrowLeft />
-            </Button>
-            {pagination.range.length > 0 &&
-              pagination.range.map((item, index) => {
-                if (typeof item === 'number') {
-                  return (
-                    <Button
-                      key={`${item}-${index}`}
-                      size={page === item ? 'sm' : 'xs'}
-                      disabled
-                      style={{
-                        color:
-                          page === item
-                            ? 'var(--mantine-color-ytRed-text)'
-                            : '',
-                      }}
-                    >
-                      {item}
-                    </Button>
-                  )
-                }
-                if (typeof item === 'string') {
-                  return <Text>{'. . .'}</Text>
-                }
-              })}
-            <Button
-              disabled={page === paginationTotal}
-              color="ytRed"
-              size="xs"
-              component={Link}
-              to={`/videos?page=${page + 1}&pageToken=${
-                videosData?.nextPageToken
-              }`}
-            >
-              <IconArrowRight />
-            </Button>
-          </Group>
+          <Pagination
+            page={page}
+            videosData={videosData}
+            pagination={pagination}
+            paginationTotal={paginationTotal}
+          />
           {videosData?.items.length > 0 && (
             <Group justify="center" align="normal">
               {videosData?.items?.map((item: any, index: number) => {
@@ -112,6 +85,12 @@ export default function Playlist() {
               })}
             </Group>
           )}
+          <Pagination
+            page={page}
+            videoData={videosData}
+            pagination={pagination}
+            paginationTotal={paginationTotal}
+          />
         </>
       )}
       {videosData === null && <Splash />}

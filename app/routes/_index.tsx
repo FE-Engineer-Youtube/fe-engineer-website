@@ -14,6 +14,10 @@ export const meta: MetaFunction = (data: any) => {
       content:
         'Welcome to the website for FE-Engineer on Youtube.  Learn to build software and hardware at home to use AI, automation, and web tools for just about everything!',
     },
+    {
+      name: 'keywords',
+      content: `Homelab, Software Engineering, How-to, Networking, Proxies, AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding`,
+    },
   ]
 }
 
@@ -28,10 +32,9 @@ export const loader: LoaderFunction = async () => {
     YTVideoData = await cache.get('homepage-videos')
   } else {
     YTVideoData = await getRecentVideos(2)
-    cache.set('homepage-videos', YTVideoData, 60 * 60 * 60)
+    cache.set('homepage-videos', YTVideoData, 60 * 60 * 2)
   }
 
-  // let data = { YTVideoData }
   return { YTVideoData }
 }
 

@@ -2,28 +2,29 @@ import type { LoaderFunction, MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import Splash from '~/components/organisms/splash'
 
-export const meta: MetaFunction = (data: any) => {
-  console.log(data)
+export const meta: MetaFunction = ({ data }: any) => {
   return [
     { title: '404 uh oh | FE-Engineer' },
     {
       name: 'description',
-      content: `${data.message}`,
+      content: `${data.displayText.message}`,
     },
   ]
 }
 
 export const loader: LoaderFunction = async () => {
-  const message =
-    'Sad day, it looks like the page you are looking for does not exist.  Maybe if you go back and try again it will be different the next time...'
-  return { message }
+  const displayText = {
+    message:
+      'Sad day, it looks like the page you are looking for does not exist.  Maybe if you go back and try again it will be different the next time...',
+  }
+  return { displayText }
 }
 
 export default function fourOhFour() {
-  const { message }: any = useLoaderData()
+  const { displayText }: any = useLoaderData()
   return (
     <>
-      <Splash message={message} />
+      <Splash message={displayText.message} />
     </>
   )
 }

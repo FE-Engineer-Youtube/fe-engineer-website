@@ -14,8 +14,6 @@ import { cache } from '~/utils/db.server'
 import { findIndex } from '~/utils/utils'
 
 export const meta: MetaFunction = (data: any) => {
-  console.log(data)
-
   const title =
     data?.matches[1]?.data?.playListData?.items[
       findIndex(
@@ -31,8 +29,6 @@ export const meta: MetaFunction = (data: any) => {
         data?.matches[2]?.params?.playlist
       )
     ]?.snippet?.description || 'Playlist Description'
-
-  console.log(description)
 
   return [
     { title: `${title} | FE-Engineer` },
@@ -55,7 +51,7 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
     playListItemsData = await cache.get(`playlist-${playListId}`)
   } else {
     playListItemsData = await getPlayListItems(playListId)
-    cache.set(`playlist-${playListId}`, playListItemsData, 60 * 60 * 60)
+    cache.set(`playlist-${playListId}`, playListItemsData, 60 * 60 * 2)
   }
 
   return { playListItemsData }
@@ -88,7 +84,7 @@ export default function PlayListItemPage() {
 
   return (
     <>
-      <Title ta="center" order={1} pt={128} pb={64}>
+      <Title ta="center" order={1} pt={64} pb={48}>
         <Text
           inherit
           variant="gradient"

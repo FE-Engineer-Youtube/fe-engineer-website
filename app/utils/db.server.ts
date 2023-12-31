@@ -9,10 +9,10 @@ declare global {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  cache = new NodeCache({ stdTTL: 1200, checkperiod: 120 })
+  cache = new NodeCache({ stdTTL: 1800, checkperiod: 600 })
 } else {
   if (!global.__cache) {
-    global.__cache = new NodeCache({ stdTTL: 1200, checkperiod: 120 })
+    global.__cache = new NodeCache({ stdTTL: 1800, checkperiod: 600 })
   }
   cache = global.__cache
 }

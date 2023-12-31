@@ -6,12 +6,10 @@ import PlayListCard from '~/components/atoms/PlayListCard'
 import Splash from '~/components/organisms/splash'
 
 export const meta: MetaFunction = (data: any) => {
-  console.log(data.matches[1].data.playListData.items)
   let keywords: string[] = []
   data?.matches[1]?.data?.playListData?.items.map((item: any) => {
     keywords.push(item?.snippet?.title || '')
   })
-  console.log(keywords)
   return [
     { title: 'Video Playlists | FE-Engineer' },
     {
@@ -50,7 +48,7 @@ export default function Playlist() {
 
   return (
     <>
-      <Title ta="center" order={1} pt={128} pb={64}>
+      <Title ta="center" order={1} pt={64} pb={48}>
         <Text
           inherit
           variant="gradient"

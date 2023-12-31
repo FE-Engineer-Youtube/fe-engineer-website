@@ -3,10 +3,9 @@ const channel_id = process.env.YT_CHANNEL_ID
 
 export async function getRecentVideos(number: number) {
   try {
-    console.log('hitting api getRecentVideos')
-    let res = await fetch(
-      `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${channel_id}&maxResults=${number}&order=date&type=video&key=${api_key}`
-    )
+    const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${channel_id}&maxResults=${number}&order=date&type=video&key=${api_key}`
+    console.log('hitting api getRecentVideos at: ', url)
+    let res = await fetch(url)
     if (!res || res.status !== 200) {
       throw new Error(res.statusText)
     }
@@ -20,10 +19,9 @@ export async function getRecentVideos(number: number) {
 
 export async function getPlayLists() {
   try {
-    console.log('hitting api getPlayLists')
-    let res = await fetch(
-      `https://youtube.googleapis.com/youtube/v3/playlists?part=contentDetails%2Csnippet&channelId=${channel_id}&maxResults=100&key=${api_key}`
-    )
+    const url = `https://youtube.googleapis.com/youtube/v3/playlists?part=contentDetails%2Csnippet&channelId=${channel_id}&maxResults=100&key=${api_key}`
+    console.log('hitting api getPlayLists at: ', url)
+    let res = await fetch(url)
     if (!res || res.status !== 200) {
       throw new Error(res.statusText)
     }
@@ -37,10 +35,9 @@ export async function getPlayLists() {
 
 export async function getPlayListItems(playlistId: string) {
   try {
-    console.log('hitting api getPlayListItems')
-    let res = await fetch(
-      `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=${api_key}`
-    )
+    const url = `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=${api_key}`
+    console.log('hitting api getPlayListItems at: ', url)
+    let res = await fetch(url)
     if (!res || res.status !== 200) {
       throw new Error(res.statusText)
     }
@@ -54,10 +51,9 @@ export async function getPlayListItems(playlistId: string) {
 
 export async function getVideo(videoId: string) {
   try {
-    console.log('hitting api getVideo')
-    let res = await fetch(
-      `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${api_key}`
-    )
+    const url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${api_key}`
+    console.log('hitting api getVideo at: ', url)
+    let res = await fetch(url)
     if (!res || res.status !== 200) {
       throw new Error(res.statusText)
     }
@@ -71,12 +67,11 @@ export async function getVideo(videoId: string) {
 
 export async function getAllVideos(results: number, pageToken?: string | null) {
   try {
-    console.log('hitting api getAllVideos')
-    let res = await fetch(
-      `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${channel_id}&${
-        pageToken ? `pageToken=${pageToken}&` : ''
-      }order=date&maxResults=${results}&type=video&key=${api_key}`
-    )
+    const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${channel_id}&${
+      pageToken ? `pageToken=${pageToken}&` : ''
+    }order=date&maxResults=${results}&type=video&key=${api_key}`
+    console.log('hitting api getAllVideos at: ', url)
+    let res = await fetch(url)
     if (!res || res.status !== 200) {
       throw new Error(res.statusText)
     }

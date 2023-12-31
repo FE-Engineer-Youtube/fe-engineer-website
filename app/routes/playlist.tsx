@@ -14,7 +14,7 @@ export const loader: LoaderFunction = async () => {
     playListData = await cache.get('playlists')
   } else {
     playListData = await getPlayLists()
-    cache.set('playlists', playListData, 60 * 60 * 60)
+    cache.set('playlists', playListData, 60 * 60 * 2)
   }
 
   return { playListData }

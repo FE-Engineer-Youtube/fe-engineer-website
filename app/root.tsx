@@ -8,7 +8,6 @@ import {
   Title,
 } from '@mantine/core'
 import '@mantine/core/styles.css'
-import { useDisclosure } from '@mantine/hooks'
 import { cssBundleHref } from '@remix-run/css-bundle'
 import type { LinksFunction } from '@remix-run/node'
 import {
@@ -21,7 +20,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react'
-import classes from '~/components/styles/root.styles.module.css'
+import classes from '~/styles/root.styles.module.css'
 import { theme } from './utils/theme'
 
 export const links: LinksFunction = () => [
@@ -50,8 +49,6 @@ export const links: LinksFunction = () => [
 ]
 
 export default function App() {
-  const [opened, { toggle }] = useDisclosure()
-
   const displayText = {
     nav: [
       {
@@ -80,11 +77,6 @@ export default function App() {
             header={{ height: 60 }}
             transitionDuration={350}
             transitionTimingFunction="ease"
-            // navbar={{
-            //   width: 300,
-            //   breakpoint: 'sm',
-            //   collapsed: { mobile: !opened },
-            // }}
             padding="md"
           >
             <AppShell.Header>
@@ -124,15 +116,6 @@ export default function App() {
               </Group>
             </AppShell.Header>
             <AppShell.Main>
-              <Text>
-                {/* {matches
-                  .filter((match: any) => match?.handle?.breadcrumb)
-                  .map((match, index) => (
-                    <Breadcrumbs key={index}>
-                      {match?.handle?.breadcrumb(match)}
-                    </Breadcrumbs>
-                  ))} */}
-              </Text>
               <Container size={1280}>
                 <Outlet />
               </Container>
