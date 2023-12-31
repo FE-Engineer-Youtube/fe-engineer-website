@@ -1,15 +1,28 @@
-import { ColorSchemeScript, MantineProvider } from '@mantine/core'
+import {
+  AppShell,
+  ColorSchemeScript,
+  Container,
+  Group,
+  MantineProvider,
+  Text,
+  Title,
+} from '@mantine/core'
 import '@mantine/core/styles.css'
+import { useDisclosure } from '@mantine/hooks'
 import { cssBundleHref } from '@remix-run/css-bundle'
 import type { LinksFunction } from '@remix-run/node'
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
+  NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react'
+import classes from '~/components/styles/root.styles.module.css'
+import { theme } from './utils/theme'
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref
@@ -18,31 +31,40 @@ export const links: LinksFunction = () => [
         {
           rel: 'apple-touch-icon',
           sizes: '180x180',
-          href: 'https://yt3.ggpht.com/s8Zhr1JBbxpqhHUhn6hmADJCQRgChgJFm7f3gzM28CFeC4IpZEEyeVvnBFlZUOsgk3ROoPFq5sc=s88-c-k-c0x00ffffff-no-rj',
+          href: '/images/fe-engineer.png',
         },
         {
           rel: 'icon',
           type: 'image/png',
           sizes: '32x32',
-          href: 'https://yt3.ggpht.com/s8Zhr1JBbxpqhHUhn6hmADJCQRgChgJFm7f3gzM28CFeC4IpZEEyeVvnBFlZUOsgk3ROoPFq5sc=s88-c-k-c0x00ffffff-no-rj',
+          href: '/images/fe-engineer.png',
         },
       ]
     : [
         {
           rel: 'apple-touch-icon',
           sizes: '180x180',
-          href: 'https://yt3.ggpht.com/s8Zhr1JBbxpqhHUhn6hmADJCQRgChgJFm7f3gzM28CFeC4IpZEEyeVvnBFlZUOsgk3ROoPFq5sc=s88-c-k-c0x00ffffff-no-rj',
-        },
-        {
-          rel: 'icon',
-          type: 'image/png',
-          sizes: '32x32',
-          href: 'https://yt3.ggpht.com/s8Zhr1JBbxpqhHUhn6hmADJCQRgChgJFm7f3gzM28CFeC4IpZEEyeVvnBFlZUOsgk3ROoPFq5sc=s88-c-k-c0x00ffffff-no-rj',
+          href: '/images/fe-engineer.png',
         },
       ]),
 ]
 
 export default function App() {
+  const [opened, { toggle }] = useDisclosure()
+
+  const displayText = {
+    nav: [
+      {
+        text: 'Videos',
+        url: '/videos',
+      },
+      {
+        text: 'Playlists',
+        url: '/playlist',
+      },
+    ],
+  }
+
   return (
     <html lang="en">
       <head>
@@ -53,8 +75,70 @@ export default function App() {
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider defaultColorScheme="auto">
-          <Outlet />
+        <MantineProvider theme={theme} defaultColorScheme="auto">
+          <AppShell
+            header={{ height: 60 }}
+            transitionDuration={350}
+            transitionTimingFunction="ease"
+            // navbar={{
+            //   width: 300,
+            //   breakpoint: 'sm',
+            //   collapsed: { mobile: !opened },
+            // }}
+            padding="md"
+          >
+            <AppShell.Header>
+              <Group h="100%" w="100%" px="md" justify="space-between">
+                <Link className={classes.logoLink} to="/">
+                  <Title className={classes.title} order={3}>
+                    <Text
+                      inherit
+                      variant="gradient"
+                      component="span"
+                      gradient={{ from: 'ytRed', to: 'blue' }}
+                    >
+                      FE-Engineer.com
+                    </Text>
+                  </Title>
+                </Link>
+                {/* <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" /> */}
+                <nav>
+                  {displayText.nav.map((item) => {
+                    return (
+                      <NavLink
+                        key={item.text}
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? 'navLink pending'
+                            : isActive
+                            ? 'navLink active'
+                            : 'navLink'
+                        }
+                        to={item.url}
+                      >
+                        {item.text}
+                      </NavLink>
+                    )
+                  })}
+                </nav>
+              </Group>
+            </AppShell.Header>
+            <AppShell.Main>
+              <Text>
+                {/* {matches
+                  .filter((match: any) => match?.handle?.breadcrumb)
+                  .map((match, index) => (
+                    <Breadcrumbs key={index}>
+                      {match?.handle?.breadcrumb(match)}
+                    </Breadcrumbs>
+                  ))} */}
+              </Text>
+              <Container size={1280}>
+                <Outlet />
+              </Container>
+            </AppShell.Main>
+          </AppShell>
+
           <ScrollRestoration />
           <Scripts />
           <LiveReload />

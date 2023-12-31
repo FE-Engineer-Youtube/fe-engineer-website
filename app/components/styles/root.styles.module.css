@@ -1,0 +1,25 @@
+.title {
+  text-decoration: none;
+}
+
+.logoLink:active,
+.logoLink {
+  text-decoration: none;
+}
+
+.logoLink:hover {
+  text-decoration: underline;
+}
+
+:global {
+  .navLink {
+    font-weight: 700;
+    text-decoration: none;
+    padding-left: var(--mantine-spacing-md);
+    color: var(--mantine-color-text);
+  }
+  .navLink.active {
+    text-decoration: underline;
+    color: var(--mantine-color-ytRed-text);
+  }
+}
