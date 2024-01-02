@@ -82,3 +82,19 @@ export async function getAllVideos(results: number, pageToken?: string | null) {
     return null
   }
 }
+
+export async function getChannelDetails() {
+  try {
+    const url = `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics%2CbrandingSettings%2CtopicDetails&id=${channel_id}&key=${api_key}`
+    console.log('hitting api getChannelDetails at: ', url)
+    let res = await fetch(url)
+    if (!res || res.status !== 200) {
+      throw new Error(res.statusText)
+    }
+    let data = await res.json()
+    return data
+  } catch (e) {
+    console.log(e)
+    return null
+  }
+}
