@@ -38,8 +38,20 @@ export const links: LinksFunction = () => [
           sizes: '32x32',
           href: '/images/fe-engineer.png',
         },
+        {
+          rel: 'favicon',
+          type: 'image/png',
+          sizes: '32x32',
+          href: '/images/fe-engineer.png',
+        },
       ]
     : [
+        {
+          rel: 'favicon',
+          type: 'image/png',
+          sizes: '32x32',
+          href: '/images/fe-engineer.png',
+        },
         {
           rel: 'apple-touch-icon',
           sizes: '180x180',
