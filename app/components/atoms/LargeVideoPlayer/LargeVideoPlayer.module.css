@@ -1,0 +1,15 @@
+.videocard {
+  width: 100%;
+}
+
+.iframe {
+  border: none;
+}
+
+.description {
+  white-space: pre-line;
+}
+
+.badge {
+  text-transform: uppercase;
+}
