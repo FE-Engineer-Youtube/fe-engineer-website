@@ -20,8 +20,11 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react'
+import dotenv from 'dotenv'
 import classes from '~/styles/root.styles.module.css'
 import { theme } from './utils/theme'
+
+dotenv.config()
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref
@@ -85,7 +88,7 @@ export default function App() {
         {/* <!-- Google tag (gtag.js) --> */}
         <script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-X3LPTV6M1E"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA}`}
         ></script>
         <script
           dangerouslySetInnerHTML={{
@@ -93,7 +96,7 @@ export default function App() {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-X3LPTV6M1E')`,
+              gtag('config', ${process.env.GA})`,
           }}
           id="ga4"
         ></script>
