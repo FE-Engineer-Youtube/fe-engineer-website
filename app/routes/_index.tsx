@@ -1,4 +1,5 @@
-import { Divider, Group, Title } from '@mantine/core'
+import { Divider, Group, Stack, Title } from '@mantine/core'
+import { useElementSize } from '@mantine/hooks'
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import VideoPlayer from '~/components/atoms/VideoPlayer'
@@ -47,19 +48,28 @@ export const loader: LoaderFunction = async () => {
 
 export default function Index() {
   const { YTVideoData, channelData }: any = useLoaderData()
-  console.log('channel', channelData)
+  const { ref, width, height } = useElementSize()
   return (
     <>
       {channelData && <Hpabout channelData={channelData} />}
       {YTVideoData !== null && (
         <>
-          <Divider mt="md" />
+          <Divider mt="md" ref={ref} />
           <Title order={2} ta="center" mb="lg" mt="xl">{`Recent Videos`}</Title>
-          <Group align="center" justify="center" grow>
-            {YTVideoData?.items?.map((video: any, index: number) => {
-              return <VideoPlayer key={index} data={video} />
-            })}
-          </Group>
+          {width >= 640 && (
+            <Group align="center" justify="center" grow wrap="wrap">
+              {YTVideoData?.items?.map((video: any, index: number) => {
+                return <VideoPlayer key={index} data={video} />
+              })}
+            </Group>
+          )}
+          {width < 640 && (
+            <Stack>
+              {YTVideoData?.items?.map((video: any, index: number) => {
+                return <VideoPlayer key={index} data={video} />
+              })}
+            </Stack>
+          )}
         </>
       )}
       {channelData === null && YTVideoData === null && (

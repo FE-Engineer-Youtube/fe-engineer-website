@@ -9,8 +9,8 @@ const VideoPlayer = ({ data }: any) => {
   const [ref, rect] = useResizeObserver()
 
   useEffect(() => {
-    if (rect.width !== undefined) {
-      setHeight(sixteenByNine(rect.width))
+    if (rect?.width !== undefined) {
+      setHeight(sixteenByNine(rect?.width))
     } else {
       setHeight(0)
     }
