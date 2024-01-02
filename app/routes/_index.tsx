@@ -1,9 +1,10 @@
-import { Group } from '@mantine/core'
+import { Divider, Group, Title } from '@mantine/core'
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import VideoPlayer from '~/components/atoms/VideoPlayer'
+import Hpabout from '~/components/molecules/HpAbout'
 import Splash from '~/components/organisms/splash'
-import { getRecentVideos } from '~/models/fetchYT.server'
+import { getChannelDetails, getRecentVideos } from '~/models/fetchYT.server'
 import { cache } from '~/utils/db.server'
 
 export const meta: MetaFunction = (data: any) => {
@@ -26,31 +27,44 @@ export const handle = {
 }
 
 export const loader: LoaderFunction = async () => {
-  let YTVideoData
+  let YTVideoData, channelData
 
   if (cache.has('homepage-videos')) {
     YTVideoData = await cache.get('homepage-videos')
   } else {
     YTVideoData = await getRecentVideos(2)
-    cache.set('homepage-videos', YTVideoData, 60 * 60 * 2)
+    cache.set('homepage-videos', YTVideoData, 60 * 60 * 8)
+  }
+  if (cache.has('channel-content')) {
+    channelData = await cache.get('channel-content')
+  } else {
+    channelData = await getChannelDetails()
+    cache.set('channel-content', channelData, 60 * 5)
   }
 
-  return { YTVideoData }
+  return { YTVideoData: YTVideoData, channelData: channelData }
 }
 
 export default function Index() {
-  const { YTVideoData }: any = useLoaderData()
+  const { YTVideoData, channelData }: any = useLoaderData()
+  console.log('channel', channelData)
   return (
     <>
-      <Splash message="Welcome Homelabbers and Engineers!" />
+      {channelData && <Hpabout channelData={channelData} />}
       {YTVideoData !== null && (
-        <Group align="center" justify="center">
-          {YTVideoData?.items?.map((video: any, index: number) => {
-            return <VideoPlayer key={index} data={video} />
-          })}
-        </Group>
+        <>
+          <Divider mt="md" />
+          <Title order={2} ta="center" mb="lg" mt="xl">{`Recent Videos`}</Title>
+          <Group align="center" justify="center" grow>
+            {YTVideoData?.items?.map((video: any, index: number) => {
+              return <VideoPlayer key={index} data={video} />
+            })}
+          </Group>
+        </>
       )}
-      {YTVideoData === null && <Splash />}
+      {channelData === null && YTVideoData === null && (
+        <Splash message="Welcome Homelabbers and Engineers!" />
+      )}
     </>
   )
 }

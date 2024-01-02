@@ -38,7 +38,7 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
     videosData = await cache.get(`videos-${results}-${page}`)
   } else {
     videosData = await getAllVideos(results, pageToken)
-    cache.set(`videos-${results}-${page}`, videosData, 60 * 60)
+    cache.set(`videos-${results}-${page}`, videosData, 60 * 60 * 8)
   }
   return { videosData, page }
 }
