@@ -1,3 +1,7 @@
+import dotenv from 'dotenv'
+
+dotenv.config()
+
 const api_key = process.env.YT_API_KEY
 const channel_id = process.env.YT_CHANNEL_ID
 
