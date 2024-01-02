@@ -1,7 +1,12 @@
 import { Divider, Group, Stack, Text, Title } from '@mantine/core'
+import { useElementSize } from '@mantine/hooks'
 import { CountUp } from 'use-count-up'
+import classes from './Hpabout.module.css'
 
 const Hpabout = ({ channelData }: any) => {
+  const { ref, width } = useElementSize()
+  console.log(width)
+  console.log(channelData?.items[0]?.statistics)
   return (
     <>
       <Title className={'classes.title'} ta="center" order={1} mb="xl">
@@ -25,60 +30,75 @@ const Hpabout = ({ channelData }: any) => {
         {channelData?.items[0]?.brandingSettings?.channel?.description ||
           'channel description'}
       </Text>
-      <Divider mt="md" />
-      <Group justify="space-between" mt="md">
-        <Stack gap={0}>
-          <Text ta="center" size="xl">
-            <CountUp
-              isCounting
-              end={+channelData?.items[0]?.statistics?.videoCount || 9999}
-              duration={3}
-              formatter={(value) =>
-                value.toLocaleString(undefined, {
-                  maximumFractionDigits: 0,
-                })
+      <Divider mt="md" ref={ref} />
+      {width > 450 && (
+        <Group align="center" justify="space-between" mt="md">
+          {Object.keys(channelData?.items[0]?.statistics).map(
+            (item: any, index) => {
+              if (!item.includes('hidden')) {
+                return (
+                  <Stack gap={0}>
+                    <Text ta="center" size="xl">
+                      <CountUp
+                        isCounting
+                        end={+channelData?.items[0]?.statistics[item] || 9999}
+                        duration={3}
+                        formatter={(value) =>
+                          value.toLocaleString(undefined, {
+                            maximumFractionDigits: 0,
+                          })
+                        }
+                      />
+                    </Text>
+                    <Title
+                      className={classes.channelStats}
+                      order={2}
+                      ta="center"
+                      c="ytRed.9"
+                    >
+                      {item.replace(/count/i, 's')}
+                    </Title>
+                  </Stack>
+                )
               }
-            />
-          </Text>
-          <Title order={2} ta="center" c="ytRed.9">
-            Videos
-          </Title>
-        </Stack>
-        <Stack gap={0}>
-          <Text ta="center" size="xl">
-            <CountUp
-              isCounting
-              end={+channelData?.items[0]?.statistics?.viewCount || 9999}
-              duration={3}
-              formatter={(value) =>
-                value.toLocaleString(undefined, {
-                  maximumFractionDigits: 0,
-                })
+            }
+          )}
+        </Group>
+      )}
+      {width <= 450 && (
+        <>
+          {Object.keys(channelData?.items[0]?.statistics).map(
+            (item: any, index) => {
+              if (!item.includes('hidden')) {
+                return (
+                  <Stack gap={0} mt="md">
+                    <Text ta="center" size="xl">
+                      <CountUp
+                        isCounting
+                        end={+channelData?.items[0]?.statistics[item] || 9999}
+                        duration={3}
+                        formatter={(value) =>
+                          value.toLocaleString(undefined, {
+                            maximumFractionDigits: 0,
+                          })
+                        }
+                      />
+                    </Text>
+                    <Title
+                      className={classes.channelStats}
+                      order={2}
+                      ta="center"
+                      c="ytRed.9"
+                    >
+                      {item.replace(/count/i, 's')}
+                    </Title>
+                  </Stack>
+                )
               }
-            />
-          </Text>
-          <Title order={2} ta="center" c="ytRed.9">
-            Views
-          </Title>
-        </Stack>
-        <Stack gap={0}>
-          <Text ta="center" size="xl">
-            <CountUp
-              isCounting
-              end={+channelData?.items[0]?.statistics?.subscriberCount || 9999}
-              duration={3}
-              formatter={(value) =>
-                value.toLocaleString(undefined, {
-                  maximumFractionDigits: 0,
-                })
-              }
-            />
-          </Text>
-          <Title order={2} ta="center" c="ytRed.9">
-            Subscribers
-          </Title>
-        </Stack>
-      </Group>
+            }
+          )}
+        </>
+      )}
     </>
   )
 }

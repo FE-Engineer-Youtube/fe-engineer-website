@@ -48,7 +48,7 @@ export const loader: LoaderFunction = async () => {
 
 export default function Index() {
   const { YTVideoData, channelData }: any = useLoaderData()
-  const { ref, width, height } = useElementSize()
+  const { ref, width } = useElementSize()
   return (
     <>
       {channelData && <Hpabout channelData={channelData} />}
