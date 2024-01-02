@@ -70,6 +70,21 @@ export default function App() {
         <Meta />
         <Links />
         <ColorSchemeScript />
+        {/* <!-- Google tag (gtag.js) --> */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-X3LPTV6M1E"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-X3LPTV6M1E')`,
+          }}
+          id="ga4"
+        ></script>
       </head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme="auto">
