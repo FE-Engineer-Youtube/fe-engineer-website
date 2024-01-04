@@ -5,8 +5,7 @@ import classes from './Hpabout.module.css'
 
 const Hpabout = ({ channelData }: any) => {
   const { ref, width } = useElementSize()
-  console.log(width)
-  console.log(channelData?.items[0]?.statistics)
+
   return (
     <>
       <Title className={'classes.title'} ta="center" order={1} mb="xl">
@@ -37,7 +36,7 @@ const Hpabout = ({ channelData }: any) => {
             (item: any, index) => {
               if (!item.includes('hidden')) {
                 return (
-                  <Stack gap={0}>
+                  <Stack key={`${item}-${index}`} gap={0}>
                     <Text ta="center" size="xl">
                       <CountUp
                         isCounting
@@ -71,7 +70,7 @@ const Hpabout = ({ channelData }: any) => {
             (item: any, index) => {
               if (!item.includes('hidden')) {
                 return (
-                  <Stack gap={0} mt="md">
+                  <Stack key={`${item}-${index}`} gap={0} mt="md">
                     <Text ta="center" size="xl">
                       <CountUp
                         isCounting
