@@ -1,5 +1,6 @@
 import { Badge, Card, Group, Text, Title } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
+import { decode } from 'html-entities'
 import { useEffect, useState } from 'react'
 import { sixteenByNine } from '~/utils/utils'
 import classes from './LargeVideoPlayer.module.css'
@@ -47,7 +48,7 @@ const LargeVideoPlayer = ({ data }: any) => {
             component="span"
             gradient={{ from: 'ytRed', to: 'blue' }}
           >
-            {displayText.title}
+            {decode(displayText.title)}
           </Text>
         </Title>
         <Group justify="space-between">
@@ -55,11 +56,11 @@ const LargeVideoPlayer = ({ data }: any) => {
           <Text>{displayText.views}</Text>
           <Text>{displayText.likes}</Text>
         </Group>
-        {data?.items[0]?.snippet.tags.length > 0 && (
+        {data?.items[0]?.snippet?.tags?.length > 0 && (
           <>
             <Group align="center" mt="md">
               <Text fw={700}>{displayText.tags}</Text>
-              {data?.items[0]?.snippet.tags.map((item: any) => {
+              {data?.items[0]?.snippet?.tags.map((item: any) => {
                 return (
                   <Badge
                     color="ytRed"
