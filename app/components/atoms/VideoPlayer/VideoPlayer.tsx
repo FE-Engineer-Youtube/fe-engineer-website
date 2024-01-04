@@ -1,5 +1,6 @@
-import { Card, Text } from '@mantine/core'
+import { Card, Text, Title } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
+import { decode } from 'html-entities'
 import { useEffect, useState } from 'react'
 import { sixteenByNine } from '~/utils/utils'
 import classes from './VideoPlayer.module.css'
@@ -17,7 +18,10 @@ const VideoPlayer = ({ data }: any) => {
   }, [rect])
 
   const displayText = {
-    title: `YouTube Video for: ${data?.snippet?.title || 'Video Title'}`,
+    accessibleTitle: `YouTube Video for: ${
+      data?.snippet?.title || 'Video Title'
+    }`,
+    title: `${data?.snippet?.title || 'Video Title'}`,
     description: data?.snippet?.description || 'Description',
   }
 
@@ -29,13 +33,30 @@ const VideoPlayer = ({ data }: any) => {
             title={displayText.title}
             width="100%"
             height={height}
-            src={`https://www.youtube.com/embed/${data.id.videoId}`}
+            src={`https://www.youtube.com/embed/${data?.contentDetails?.upload?.videoId}`}
             frameBorder={0}
             allowFullScreen
           />
         </Card.Section>
-        <Text ta="center" size="lg" mt="xl">
-          {displayText.description}
+        <Title
+          className={classes.title}
+          order={2}
+          ta="center"
+          size="h3"
+          mt="md"
+        >
+          <Text
+            inherit
+            variant="gradient"
+            component="span"
+            gradient={{ from: 'ytRed', to: 'blue' }}
+            lineClamp={3}
+          >
+            {decode(displayText?.title)}
+          </Text>
+        </Title>
+        <Text className={classes.description} ta="left" size="md" lineClamp={3}>
+          {displayText?.description}
         </Text>
       </Card>
     </>

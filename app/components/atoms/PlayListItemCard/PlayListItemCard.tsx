@@ -1,6 +1,7 @@
 import { Card, Text, Title } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
 import { Link } from '@remix-run/react'
+import { decode } from 'html-entities'
 import { createSrcSet, sixteenByNine } from '~/utils/utils'
 import classes from './PlayListItemCard.module.css'
 
@@ -33,27 +34,39 @@ const PlayListItemCard = ({ data }: any) => {
               className={classes.image}
               ref={ref}
               style={{ height: sixteenByNine(rect.width), objectFit: 'cover' }}
-              src={thumbnails.default.url}
+              src={thumbnails?.default?.url}
               srcSet={createSrcSet(thumbnails)}
               sizes={displayText.sizes}
-              alt={displayText.alt}
+              alt={displayText?.alt}
             />
           </Card.Section>
-          <Title className={classes.title} order={2} ta="center" size="h3">
+          <Title
+            className={classes.title}
+            order={2}
+            ta="center"
+            size="h3"
+            mt="md"
+          >
             <Text
               inherit
               variant="gradient"
               component="span"
               gradient={{ from: 'ytRed', to: 'blue' }}
+              lineClamp={3}
             >
-              {displayText.title}
+              {decode(displayText?.title)}
             </Text>
           </Title>
-          <Text ta="center" size="md" mt="md" lineClamp={3}>
-            {displayText.description}
+          <Text
+            className={classes.description}
+            ta="left"
+            size="md"
+            lineClamp={3}
+          >
+            {displayText?.description}
           </Text>
-          <Text ta="right" size="xs" mt="xs" mb="xs">
-            {displayText.lastUpdate}
+          <Text ta="right" size="xs" mt="xl">
+            {displayText?.lastUpdate}
           </Text>
         </Card>
       </Link>

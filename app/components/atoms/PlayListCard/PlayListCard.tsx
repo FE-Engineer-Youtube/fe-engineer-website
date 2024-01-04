@@ -1,6 +1,7 @@
 import { Card, Text, Title } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
 import { Link } from '@remix-run/react'
+import { decode } from 'html-entities'
 import { createSrcSet, sixteenByNine } from '~/utils/utils'
 import classes from './PlayListCard.module.css'
 
@@ -31,21 +32,32 @@ const PlayListCard = ({ data }: any) => {
               sizes={displayText.sizes}
               alt={displayText.alt}
             />
-            <Title className={classes.title} order={2} ta="center" mb="md">
-              <Text
-                inherit
-                variant="gradient"
-                component="span"
-                gradient={{ from: 'ytRed', to: 'blue' }}
-              >
-                {displayText.title}
-              </Text>
-            </Title>
-            <Text ta="center" size="md" mx="auto" mt="md" lineClamp={3}>
-              {displayText.description}
-            </Text>
           </Card.Section>
-          <Text className={classes.bottomText} ta="right" size="xs" mt="md">
+          <Title
+            className={classes.title}
+            order={2}
+            ta="center"
+            lineClamp={2}
+            mt="md"
+          >
+            <Text
+              inherit
+              variant="gradient"
+              component="span"
+              gradient={{ from: 'ytRed', to: 'blue' }}
+            >
+              {decode(displayText.title)}
+            </Text>
+          </Title>
+          <Text
+            className={classes.description}
+            ta="left"
+            size="md"
+            lineClamp={3}
+          >
+            {displayText.description}
+          </Text>
+          <Text className={classes.bottomText} ta="right" size="xs">
             {displayText.itemCount}
           </Text>
         </Card>
