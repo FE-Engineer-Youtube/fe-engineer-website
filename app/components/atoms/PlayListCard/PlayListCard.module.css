@@ -4,6 +4,14 @@
   justify-content: space-between;
 }
 
+.title {
+  height: calc(1.35 * 2 * var(--mantine-h2-font-size));
+}
+
+.description {
+  height: calc(3 * 1.55 * var(--mantine-font-size-md));
+}
+
 .link {
   text-decoration: none;
   color: inherit;

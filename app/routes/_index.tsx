@@ -5,7 +5,7 @@ import { Link, useLoaderData } from '@remix-run/react'
 import VideoPlayer from '~/components/atoms/VideoPlayer'
 import Hpabout from '~/components/molecules/HpAbout'
 import Splash from '~/components/organisms/splash'
-import { getChannelDetails, getRecentVideos } from '~/models/fetchYT.server'
+import { getChannelDetails, getHPVideos } from '~/models/fetchYT.server'
 import { cache } from '~/utils/db.server'
 
 export const meta: MetaFunction = (data: any) => {
@@ -28,13 +28,13 @@ export const handle = {
 }
 
 export const loader: LoaderFunction = async () => {
-  let YTVideoData, channelData
+  let channelData, activitiesData
 
-  if (cache.has('homepage-videos')) {
-    YTVideoData = await cache.get('homepage-videos')
+  if (cache.has('homepage-activities')) {
+    activitiesData = await cache.get('homepage-activities')
   } else {
-    YTVideoData = await getRecentVideos(2)
-    cache.set('homepage-videos', YTVideoData, 60 * 60 * 8)
+    activitiesData = await getHPVideos()
+    cache.set('homepage-activities', activitiesData, 60 * 60)
   }
   if (cache.has('channel-content')) {
     channelData = await cache.get('channel-content')
@@ -43,36 +43,39 @@ export const loader: LoaderFunction = async () => {
     cache.set('channel-content', channelData, 60 * 5)
   }
 
-  return { YTVideoData: YTVideoData, channelData: channelData }
+  return {
+    channelData,
+    activitiesData,
+  }
 }
 
 export default function Index() {
-  const { YTVideoData, channelData }: any = useLoaderData()
+  const { channelData, activitiesData }: any = useLoaderData()
   const { ref, width } = useElementSize()
   return (
     <>
       {channelData && <Hpabout channelData={channelData} />}
-      {YTVideoData !== null && (
+      {activitiesData && (
         <>
           <Divider mt="md" ref={ref} />
           <Title order={2} ta="center" mb="lg" mt="xl">{`Recent Videos`}</Title>
           {width >= 640 && (
             <Group align="center" justify="center" grow wrap="wrap">
-              {YTVideoData?.items?.map((video: any, index: number) => {
+              {activitiesData?.map((video: any, index: number) => {
                 return <VideoPlayer key={index} data={video} />
               })}
             </Group>
           )}
           {width < 640 && (
             <Stack>
-              {YTVideoData?.items?.map((video: any, index: number) => {
+              {activitiesData?.map((video: any, index: number) => {
                 return <VideoPlayer key={index} data={video} />
               })}
             </Stack>
           )}
         </>
       )}
-      {channelData === null && YTVideoData === null && (
+      {!channelData && !activitiesData && (
         <Splash message="Welcome Homelabbers and Engineers!" />
       )}
     </>
