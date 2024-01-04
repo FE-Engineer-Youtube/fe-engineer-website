@@ -7,13 +7,13 @@ import { getVideo } from '~/models/fetchYT.server'
 import { cache } from '~/utils/db.server'
 
 export const meta: MetaFunction = ({ data }: any) => {
-  const title = data.videoData.items[0].snippet.title || 'Video Title'
+  const title = data?.videoData?.items[0]?.snippet?.title || 'Video Title'
   const description =
-    data.videoData.items[0].snippet.description
+    data?.videoData?.items[0]?.snippet?.description
       .replace(/(\r\n|\n|\r|)\s+/gm, ' ')
       .slice(0, 200) + '. . .' || 'Video Description'
   const keywords =
-    data.videoData.items[0].snippet.tags.join(', ') || 'Video keywords'
+    data?.videoData?.items[0]?.snippet?.tags.join(', ') || 'Video keywords'
   return [
     { title: `${title} | FE-Engineer` },
     {
@@ -46,7 +46,7 @@ export const loader: LoaderFunction = async (args: any) => {
     videoData = await cache.get(`video-${args?.params?.video}`)
   } else {
     videoData = await getVideo(args?.params?.video)
-    cache.set(`video-${args?.params?.video}`, videoData, 60 * 60 * 2)
+    cache.set(`video-${args?.params?.video}`, videoData, 60 * 60 * 8)
   }
 
   return { videoData }

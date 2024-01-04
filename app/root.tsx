@@ -19,12 +19,10 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from '@remix-run/react'
-import dotenv from 'dotenv'
 import classes from '~/styles/root.styles.module.css'
 import { theme } from './utils/theme'
-
-dotenv.config()
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref
@@ -63,7 +61,14 @@ export const links: LinksFunction = () => [
       ]),
 ]
 
+export async function loader() {
+  // expose env variable to client on purpose
+  const ga = process?.env?.GA || 'no_ga_found'
+  return ga
+}
+
 export default function App() {
+  const { ga }: any = useLoaderData()
   const displayText = {
     nav: [
       {
@@ -88,7 +93,7 @@ export default function App() {
         {/* <!-- Google tag (gtag.js) --> */}
         <script
           async
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA}`}
+          src={`https://www.googletagmanager.com/gtag/js?id=${ga}`}
         ></script>
         <script
           dangerouslySetInnerHTML={{
@@ -96,7 +101,7 @@ export default function App() {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', ${process.env.GA})`,
+              gtag('config', '${ga}')`,
           }}
           id="ga4"
         ></script>

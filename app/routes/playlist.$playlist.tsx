@@ -14,13 +14,14 @@ import { cache } from '~/utils/db.server'
 import { findIndex } from '~/utils/utils'
 
 export const meta: MetaFunction = (data: any) => {
-  const title =
+  const title = `${
     data?.matches[1]?.data?.playListData?.items[
       findIndex(
         data?.matches[1]?.data?.playListData?.items,
         data?.matches[2]?.params?.playlist
       )
     ]?.snippet?.title || 'Playlist Title'
+  } | Playlist | FE-Engineer`
 
   const description =
     data?.matches[1]?.data?.playListData?.items[
@@ -51,7 +52,7 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
     playListItemsData = await cache.get(`playlist-${playListId}`)
   } else {
     playListItemsData = await getPlayListItems(playListId)
-    cache.set(`playlist-${playListId}`, playListItemsData, 60 * 60 * 2)
+    cache.set(`playlist-${playListId}`, playListItemsData, 60 * 30)
   }
 
   return { playListItemsData }
