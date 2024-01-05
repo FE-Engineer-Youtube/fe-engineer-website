@@ -10,6 +10,7 @@
     "start": "pm2 start --name=fe --update-env pnpm -- remix",
     "remix": "pnpm i && pnpm build && pnpm start-remix",
     "stop": "pm2 delete fe",
+    "restart": "git pull && pnpm stop && pnpm start",
     "typecheck": "tsc"
   },
   "dependencies": {
