@@ -1,4 +1,4 @@
-import { Card, Text, Title } from '@mantine/core'
+import { Button, Card, Text, Title } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
 import { decode } from 'html-entities'
 import { useEffect, useState } from 'react'
@@ -8,6 +8,7 @@ import classes from './VideoPlayer.module.css'
 const VideoPlayer = ({ data }: any) => {
   const [height, setHeight] = useState(0)
   const [ref, rect] = useResizeObserver()
+  const videoId = data?.contentDetails?.upload?.videoId || ''
 
   useEffect(() => {
     if (rect?.width !== undefined) {
@@ -23,6 +24,10 @@ const VideoPlayer = ({ data }: any) => {
     }`,
     title: `${data?.snippet?.title || 'Video Title'}`,
     description: data?.snippet?.description || 'Description',
+    buttonText: 'Watch this video on Youtube',
+    buttonLabel: `Watch ${decode(
+      data?.snippet?.title || 'Video Title'
+    )} on Youtube`,
   }
 
   return (
@@ -33,7 +38,7 @@ const VideoPlayer = ({ data }: any) => {
             title={displayText.title}
             width="100%"
             height={height}
-            src={`https://www.youtube.com/embed/${data?.contentDetails?.upload?.videoId}`}
+            src={`https://www.youtube.com/embed/${videoId}`}
             frameBorder={0}
             allowFullScreen
           />
@@ -58,6 +63,17 @@ const VideoPlayer = ({ data }: any) => {
         <Text className={classes.description} ta="left" size="md" lineClamp={3}>
           {displayText?.description}
         </Text>
+        <Button
+          component="a"
+          href={`//www.youtube.com/watch?v=${videoId}`}
+          target="_blank"
+          mt="md"
+          radius={'xl'}
+          color="ytRed"
+          aria-label={displayText.buttonLabel}
+        >
+          {displayText.buttonText}
+        </Button>
       </Card>
     </>
   )

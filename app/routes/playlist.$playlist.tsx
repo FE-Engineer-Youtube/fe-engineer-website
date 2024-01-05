@@ -21,7 +21,7 @@ export const meta: MetaFunction = (data: any) => {
         data?.matches[2]?.params?.playlist
       )
     ]?.snippet?.title || 'Playlist Title'
-  } | Playlist | FE-Engineer`
+  } | Youtube Playlist | FE-Engineer`
 
   const description =
     data?.matches[1]?.data?.playListData?.items[
