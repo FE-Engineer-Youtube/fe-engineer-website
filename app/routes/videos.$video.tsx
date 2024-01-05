@@ -15,7 +15,7 @@ export const meta: MetaFunction = ({ data }: any) => {
   const keywords =
     data?.videoData?.items[0]?.snippet?.tags.join(', ') || 'Video keywords'
   return [
-    { title: `${title} | FE-Engineer` },
+    { title: `${title} | Youtube Video | FE-Engineer` },
     {
       name: 'description',
       content: `${description}`,

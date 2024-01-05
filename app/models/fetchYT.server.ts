@@ -71,7 +71,7 @@ export async function getPlayLists() {
 
 export async function getPlayListItems(playlistId: string) {
   try {
-    const url = `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=${api_key}`
+    const url = `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${api_key}`
     console.log('hitting api getPlayListItems at: ', url)
     let res = await fetch(url)
     if (!res || res.status !== 200) {

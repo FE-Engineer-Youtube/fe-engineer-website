@@ -18,7 +18,7 @@ export const meta: MetaFunction = (data: any) => {
     },
     {
       name: 'keywords',
-      content: `Homelab, Software Engineering, How-to, Networking, Proxies, AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding`,
+      content: `Homelab, Software Engineering, How-to, Networking, Proxies, AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, FE Engineer, FE-Engineer, FE Engineer Youtube, FE-Engineer Youtube, FE Engineer Channel Youtube, FE-Engineer Channel Youtube`,
     },
   ]
 }

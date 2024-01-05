@@ -4,7 +4,7 @@ import Splash from '~/components/organisms/splash'
 
 export const meta: MetaFunction = ({ data }: any) => {
   return [
-    { title: '404 uh oh | FE-Engineer' },
+    { title: '404 uh oh | Youtube |  FE-Engineer' },
     {
       name: 'description',
       content: `${data.displayText.message}`,

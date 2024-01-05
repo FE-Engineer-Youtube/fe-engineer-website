@@ -11,7 +11,7 @@ export const meta: MetaFunction = (data: any) => {
     keywords.push(item?.snippet?.title || '')
   })
   return [
-    { title: 'Video Playlists | FE-Engineer' },
+    { title: 'FE-Engineer Video Playlists on Youtube | FE-Engineer' },
     {
       name: 'description',
       content: `Playlists of videos for FE-Engineer channel on Youtube.  Videos cover a wide variety of topics including: AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, and more!`,
@@ -21,7 +21,7 @@ export const meta: MetaFunction = (data: any) => {
       content: `${
         keywords.length > 0
           ? keywords
-          : "Youtube Videos, How-to, AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding"
+          : "Youtube Videos, How-to, AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, FE Engineer, FE Engineer Playlists Youtube"
       }`,
     },
   ]
@@ -39,7 +39,7 @@ export default function Playlist() {
   const matches: any = useMatches()
   const [playListData, setPlayListData]: any = useState(null)
   const displayText = {
-    title: 'Video Playlists',
+    title: '@FE-Engineer video playlists on Youtube',
   }
 
   useEffect(() => {
