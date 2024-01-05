@@ -24,6 +24,10 @@ const VideoPlayer = ({ data }: any) => {
     }`,
     title: `${data?.snippet?.title || 'Video Title'}`,
     description: data?.snippet?.description || 'Description',
+    buttonText: 'Watch this video on Youtube',
+    buttonLabel: `Watch ${decode(
+      data?.snippet?.title || 'Video Title'
+    )} on Youtube`,
   }
 
   return (
@@ -66,9 +70,9 @@ const VideoPlayer = ({ data }: any) => {
           mt="md"
           radius={'xl'}
           color="ytRed"
-          aria-label={`Watch ${decode(displayText.title)} on Youtube`}
+          aria-label={displayText.buttonLabel}
         >
-          Watch this video on Youtube
+          {displayText.buttonText}
         </Button>
       </Card>
     </>

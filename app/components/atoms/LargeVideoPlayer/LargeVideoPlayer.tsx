@@ -9,7 +9,6 @@ import classes from './LargeVideoPlayer.module.css'
 const LargeVideoPlayer = ({ data }: any) => {
   const [height, setHeight] = useState(0)
   const [ref, rect] = useResizeObserver()
-  console.log(data)
 
   useEffect(() => {
     if (rect.width !== undefined) {

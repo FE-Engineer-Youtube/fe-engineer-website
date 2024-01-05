@@ -16,6 +16,10 @@ const PlayListCard = ({ data }: any) => {
     alt: `Video Thumbnail for ${data?.snippet?.title || 'Playlist Title'}`,
     sizes:
       '(max-width: 319px) 320px,(max-width: 479px) 320px,(max-width: 600px) 480px, (max-width: 768px) 640px, 1280px',
+    buttonText: 'Watch playlist on Youtube',
+    buttonLabel: `Watch ${decode(
+      data?.snippet?.title || 'Playlist Title'
+    )} playlist on Youtube`,
   }
 
   return (
@@ -60,9 +64,9 @@ const PlayListCard = ({ data }: any) => {
           radius="xl"
           href={`//www.youtube.com/playlist?list=${data?.id}`}
           mt="sm"
-          aria-label={`Watch ${decode(displayText.title)} playlist on Youtube`}
+          aria-label={displayText.buttonLabel}
         >
-          Watch playlist on Youtube
+          {displayText.buttonText}
         </Button>
         <Text className={classes.bottomText} ta="right" size="xs" mt="xs">
           {displayText.itemCount}

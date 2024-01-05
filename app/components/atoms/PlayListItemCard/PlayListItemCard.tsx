@@ -11,8 +11,6 @@ const PlayListItemCard = ({ data }: any) => {
   const videoId =
     data?.snippet?.resourceId?.videoId ?? data?.id?.videoId ?? null
 
-  console.log(data)
-
   const displayText = {
     title: data?.snippet?.title || 'Playlist Title',
     description: data?.snippet?.description || 'Playlist description',
@@ -25,6 +23,10 @@ const PlayListItemCard = ({ data }: any) => {
     }`,
     sizes:
       '(max-width: 319px) 320px,(max-width: 479px) 320px,(max-width: 600px) 480px, (max-width: 768px) 640px, 1280px',
+    buttonText: 'Watch Video on Youtube',
+    buttonLabel: `Watch ${decode(
+      data?.snippet?.title || 'Playlist Title'
+    )} on Youtube`,
   }
 
   return (
@@ -74,9 +76,9 @@ const PlayListItemCard = ({ data }: any) => {
             data?.snippet?.playlistId && '&list=' + data?.snippet?.playlistId
           }`}
           mt="sm"
-          aria-label={`Watch ${decode(displayText?.title)} on Youtube`}
+          aria-label={displayText.buttonLabel}
         >
-          Watch Video on Youtube
+          {displayText.buttonText}
         </Button>
         <Text ta="right" size="xs" mt="sm">
           {displayText?.lastUpdate}
