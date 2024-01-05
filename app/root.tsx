@@ -64,7 +64,7 @@ export const links: LinksFunction = () => [
 export async function loader() {
   // expose env variable to client on purpose
   const ga = process?.env?.GA || 'no_ga_found'
-  return ga
+  return { ga }
 }
 
 export default function App() {
