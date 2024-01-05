@@ -14,14 +14,14 @@ import { cache } from '~/utils/db.server'
 
 export const meta: MetaFunction = (data: any) => {
   return [
-    { title: 'Videos | FE-Engineer' },
+    { title: 'FE Engineer channel Youtube videos | FE-Engineer' },
     {
       name: 'description',
       content: `Youtube videos for FE-Engineer channel.  Videos cover a wide variety of topics including: AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, and more!`,
     },
     {
       name: 'keywords',
-      content: `AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding`,
+      content: `AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, FE Engineer Youtube, FE Engineer Youtube Videos`,
     },
   ]
 }

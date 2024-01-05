@@ -1,10 +1,21 @@
-import { Divider, Group, Stack, Text, Title } from '@mantine/core'
+import { Button, Divider, Group, Stack, Text, Title } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { CountUp } from 'use-count-up'
 import classes from './Hpabout.module.css'
 
 const Hpabout = ({ channelData }: any) => {
   const { ref, width } = useElementSize()
+
+  const displayText = {
+    title:
+      channelData?.items[0]?.brandingSettings?.channel?.title || 'FE-Engineer',
+    subTitle: 'Welcome Homelabbers and Engineers!',
+    description:
+      channelData?.items[0]?.brandingSettings?.channel?.description ||
+      'channel description',
+    buttonText: '@FE-Engineer on Youtube',
+    buttonLabel: 'Visit @FE-Engineer channel on Youtube',
+  }
 
   return (
     <>
@@ -15,19 +26,15 @@ const Hpabout = ({ channelData }: any) => {
           component="span"
           gradient={{ from: 'ytRed', to: 'blue' }}
         >
-          {channelData?.items[0]?.brandingSettings?.channel?.title ||
-            'FE-Engineer'}
+          {displayText.title}
         </Text>
       </Title>
-      <Text
-        ta="center"
-        mb="md"
-        size="xl"
-      >{`Welcome Homelabbers and Engineers!`}</Text>
+      <Text ta="center" mb="md" size="xl">
+        {displayText.subTitle}
+      </Text>
 
       <Text ta="left" component="span" size="md">
-        {channelData?.items[0]?.brandingSettings?.channel?.description ||
-          'channel description'}
+        {displayText.description}
       </Text>
       <Divider mt="md" ref={ref} />
       {width > 450 && (
@@ -97,6 +104,21 @@ const Hpabout = ({ channelData }: any) => {
             }
           )}
         </>
+      )}
+      {channelData?.items[0]?.id && (
+        <Stack mt="md" align="center">
+          <Button
+            component="a"
+            target="_blank"
+            href={`//www.youtube.com/channel/${channelData?.items[0]?.id}`}
+            color="ytRed"
+            justify="center"
+            radius="xl"
+            aria-label={displayText.buttonLabel}
+          >
+            {displayText.buttonText}
+          </Button>
+        </Stack>
       )}
     </>
   )

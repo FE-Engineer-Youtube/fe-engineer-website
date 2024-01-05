@@ -1,4 +1,4 @@
-import { Card, Text, Title } from '@mantine/core'
+import { Button, Card, Text, Title } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
 import { Link } from '@remix-run/react'
 import { decode } from 'html-entities'
@@ -10,6 +10,8 @@ const PlayListItemCard = ({ data }: any) => {
   const [ref, rect] = useResizeObserver()
   const videoId =
     data?.snippet?.resourceId?.videoId ?? data?.id?.videoId ?? null
+
+  console.log(data)
 
   const displayText = {
     title: data?.snippet?.title || 'Playlist Title',
@@ -27,9 +29,9 @@ const PlayListItemCard = ({ data }: any) => {
 
   return (
     <>
-      <Link className={classes.link} to={`/videos/${videoId}`}>
-        <Card className={classes.card} padding="md" withBorder>
-          <Card.Section>
+      <Card className={classes.card} padding="md" withBorder>
+        <Card.Section>
+          <Link className={classes.link} to={`/videos/${videoId}`}>
             <img
               className={classes.image}
               ref={ref}
@@ -39,37 +41,47 @@ const PlayListItemCard = ({ data }: any) => {
               sizes={displayText.sizes}
               alt={displayText?.alt}
             />
-          </Card.Section>
-          <Title
-            className={classes.title}
-            order={2}
-            ta="center"
-            size="h3"
-            mt="md"
-          >
-            <Text
-              inherit
-              variant="gradient"
-              component="span"
-              gradient={{ from: 'ytRed', to: 'blue' }}
-              lineClamp={3}
-            >
-              {decode(displayText?.title)}
-            </Text>
-          </Title>
+          </Link>
+        </Card.Section>
+        <Title
+          className={classes.title}
+          order={2}
+          ta="center"
+          size="h3"
+          mt="md"
+        >
           <Text
-            className={classes.description}
-            ta="left"
-            size="md"
+            inherit
+            variant="gradient"
+            component="span"
+            gradient={{ from: 'ytRed', to: 'blue' }}
             lineClamp={3}
           >
-            {displayText?.description}
+            {decode(displayText?.title)}
           </Text>
-          <Text ta="right" size="xs" mt="xl">
-            {displayText?.lastUpdate}
-          </Text>
-        </Card>
-      </Link>
+        </Title>
+        <Text className={classes.description} ta="left" size="md" lineClamp={3}>
+          {displayText?.description}
+        </Text>
+        <Button
+          component="a"
+          target="_blank"
+          color="ytRed"
+          radius="xl"
+          href={`//www.youtube.com/watch?v=${
+            data?.snippet?.resourceId?.videoId || data?.id?.videoId
+          }${
+            data?.snippet?.playlistId && '&list=' + data?.snippet?.playlistId
+          }`}
+          mt="sm"
+          aria-label={`Watch ${decode(displayText?.title)} on Youtube`}
+        >
+          Watch Video on Youtube
+        </Button>
+        <Text ta="right" size="xs" mt="sm">
+          {displayText?.lastUpdate}
+        </Text>
+      </Card>
     </>
   )
 }
