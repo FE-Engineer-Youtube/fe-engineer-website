@@ -9,6 +9,7 @@ import classes from './LargeVideoPlayer.module.css'
 const LargeVideoPlayer = ({ data }: any) => {
   const [height, setHeight] = useState(0)
   const [ref, rect] = useResizeObserver()
+  const [date, setDate] = useState('')
 
   useEffect(() => {
     if (rect.width !== undefined) {
@@ -18,16 +19,18 @@ const LargeVideoPlayer = ({ data }: any) => {
     }
   }, [rect])
 
-  const displayText = {
+  let displayText = {
     title: `${data?.items[0].snippet?.title || 'Video Title'}`,
     description: data?.items[0]?.snippet.description || 'Description',
     tags: 'Tags: ',
     views: 'Views: ',
     likes: 'Likes: ',
-    published: `Published on: ${new Date(
-      data?.items[0].snippet?.publishedAt
-    ).toLocaleDateString()}`,
+    published: `Published on: ${date}`,
   }
+
+  useEffect(() => {
+    setDate(new Date(data?.items[0].snippet?.publishedAt).toLocaleDateString())
+  }, [])
 
   return (
     <>
@@ -85,9 +88,14 @@ const LargeVideoPlayer = ({ data }: any) => {
           <>
             <Group align="center" mt="md">
               <Text fw={700}>{displayText.tags}</Text>
-              {data?.items[0]?.snippet?.tags.map((item: any) => {
+              {data?.items[0]?.snippet?.tags.map((item: any, index: number) => {
                 return (
-                  <Badge color="ytRed" className={classes.badge} size="sm">
+                  <Badge
+                    key={`${item}-${index}`}
+                    color="ytRed"
+                    className={classes.badge}
+                    size="sm"
+                  >
                     {item}
                   </Badge>
                 )
