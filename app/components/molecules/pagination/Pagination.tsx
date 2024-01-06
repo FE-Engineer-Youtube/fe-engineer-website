@@ -1,6 +1,7 @@
 import { Button, Group, Text } from '@mantine/core'
 import { Link } from '@remix-run/react'
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
+import classes from './Pagination.module.css'
 
 const Pagination = ({ pagination, page, videosData, paginationTotal }: any) => {
   return (
@@ -21,8 +22,8 @@ const Pagination = ({ pagination, page, videosData, paginationTotal }: any) => {
       >
         <IconArrowLeft />
       </Button>
-      {pagination.range.length > 0 &&
-        pagination.range.map((item: any, index: number) => {
+      {pagination?.range?.length > 0 &&
+        pagination?.range?.map((item: any, index: number) => {
           if (typeof item === 'number') {
             return (
               <Button
@@ -30,9 +31,8 @@ const Pagination = ({ pagination, page, videosData, paginationTotal }: any) => {
                 key={`${item}-${index}`}
                 size={page === item ? 'sm' : 'xs'}
                 disabled
-                style={{
-                  color: page === item ? 'var(--mantine-color-ytRed-text)' : '',
-                }}
+                // className={`${page === item ? 'classes.active' : ''}`}
+                className={item === page ? classes.active : ''}
               >
                 {item}
               </Button>

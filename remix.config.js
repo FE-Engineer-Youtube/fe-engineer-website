@@ -7,4 +7,5 @@ export default {
   // publicPath: "/build/",
   // serverBuildPath: "build/index.js",
   serverDependenciesToBundle: ["use-count-up"],
+  browserNodeBuiltinsPolyfill: { modules: { crypto: true, path: true, os: true } }
 };
