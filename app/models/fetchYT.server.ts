@@ -29,7 +29,6 @@ export async function getHPVideos() {
 
     // transform to remove any activities that are not uploads
     const trimmedData = transformActivitiesData(data)
-    console.log(trimmedData)
     return trimmedData
   } catch (e) {
     console.log(e)
