@@ -4,7 +4,7 @@ module.exports = {
     script: 'pnpm',
     args: 'remix-serve ./build/index.js',
     instances: 4,
-    port: 3003,
+    port: 3002,
     max_memory_restart: "500M",
     exec_mode: "cluster_mode",
     env: {
