@@ -11,6 +11,19 @@ export const createSrcSet = (thumbnails: any) => {
 }
 
 // function for finding the position of an element in an array by the value of elements inside the array
-export const findIndex = (data: any, idStr: string) => {
-  return data.findIndex((item: any) => item.id === idStr)
+export const findIndex = (
+  data: any,
+  idStr: string,
+  key?: string,
+  searchSnippet?: boolean
+) => {
+  return data.findIndex((item: any) => {
+    if (!searchSnippet && !key) {
+      return item.id === idStr
+    } else if (key && searchSnippet) {
+      return item.snippet[key] === idStr
+    } else if (key) {
+      return item[key] === idStr
+    }
+  })
 }
