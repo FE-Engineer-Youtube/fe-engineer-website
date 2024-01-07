@@ -5,18 +5,17 @@ dotenv.config()
 const api_key = process?.env?.YT_API_KEY || 'api-key'
 const channel_id = process?.env?.YT_CHANNEL_ID || 'channel-id'
 
+// this function takes activities data, finds upload type (videos), and returns the first two videos
 const transformActivitiesData = (activities: any) => {
   let data: any = []
   activities?.items?.map((item: any) => {
-    // console.log('inside activities loop')
-    // console.log(item?.contentDetails?.upload?.videoId)
     if (item?.contentDetails?.upload?.videoId && data.length < 2) {
-      // console.log('inside if with item:', item)
       data.push(item)
     }
   })
   return data
 }
+
 export async function getHPVideos() {
   try {
     const url = `https://youtube.googleapis.com/youtube/v3/activities?part=snippet%2CcontentDetails&channelId=${channel_id}&maxResults=10&key=${api_key}`
