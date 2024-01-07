@@ -173,7 +173,7 @@ export default function App() {
               </Group>
             </AppShell.Header>
             <AppShell.Main>
-              <Breadcrumbs>
+              <Breadcrumbs separator="⟩">
                 {matches
                   .filter(
                     (match: any) => match.handle && match.handle?.breadcrumb

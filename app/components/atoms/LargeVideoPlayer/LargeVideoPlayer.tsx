@@ -39,7 +39,7 @@ const LargeVideoPlayer = ({ data }: any) => {
 
   return (
     <>
-      <Card className={classes.videocard} padding="md" withBorder mt="md">
+      <Card className={classes.videocard} padding="md" withBorder mt={64}>
         <Card.Section className={classes.ytiframe} ref={ref}>
           <iframe
             className={classes.iframe}

@@ -95,7 +95,7 @@ export default function PlayListItemPage() {
 
   return (
     <>
-      <Title ta="center" order={1} pt={64} pb={48}>
+      <Title ta="center" order={1} mt={64} pb={48}>
         <Text
           inherit
           variant="gradient"

@@ -20,7 +20,7 @@ const Hpabout = ({ channelData }: any) => {
 
   return (
     <>
-      <Title className={classes.title} ta="center" order={1} mb="xl">
+      <Title className={classes.title} ta="center" order={1} mb="xl" mt={64}>
         <Text
           inherit
           variant="gradient"

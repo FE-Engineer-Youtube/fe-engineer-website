@@ -1,7 +1,6 @@
 import { Group, Text, Title } from '@mantine/core'
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
 import { useMatches } from '@remix-run/react'
-import { useEffect, useState } from 'react'
 import PlayListCard from '~/components/atoms/PlayListCard'
 import Splash from '~/components/organisms/splash'
 
@@ -33,18 +32,13 @@ export const loader: LoaderFunction = async () => {
 
 export default function Playlist() {
   const matches: any = useMatches()
-  const [playListData, setPlayListData]: any = useState(null)
   const displayText = {
     title: '@FE-Engineer video playlists on Youtube',
   }
 
-  useEffect(() => {
-    setPlayListData(matches[1]?.data?.playListData)
-  }, [matches[1]?.data?.playListData])
-
   return (
     <>
-      <Title ta="center" order={1} pt={64} pb={48}>
+      <Title ta="center" order={1} mt={64} pb={48}>
         <Text
           inherit
           variant="gradient"
@@ -54,14 +48,16 @@ export default function Playlist() {
           {displayText.title}
         </Text>
       </Title>
-      {playListData !== null && (
+      {matches[1]?.data?.playListData && (
         <Group justify="center" align="normal">
-          {playListData.items?.map((item: any, index: number) => {
-            return <PlayListCard data={item} key={index} />
-          })}
+          {matches[1]?.data?.playListData?.items?.map(
+            (item: any, index: number) => {
+              return <PlayListCard data={item} key={index} />
+            }
+          )}
         </Group>
       )}
-      {playListData === null && <Splash />}
+      {!matches[1]?.data?.playListData && <Splash />}
     </>
   )
 }
