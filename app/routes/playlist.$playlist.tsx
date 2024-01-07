@@ -60,7 +60,6 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
 
 export const handle = {
   breadcrumb: (data: any) => {
-    console.log(data)
     return (
       <Link className={classes.breadcrumbLink} to="/">
         {`${
