@@ -3,6 +3,7 @@ import { useResizeObserver } from '@mantine/hooks'
 import { decode } from 'html-entities'
 import { useEffect, useState } from 'react'
 import { CountUp } from 'use-count-up'
+import { gaEvent } from '~/utils/gtags.client'
 import { sixteenByNine } from '~/utils/utils'
 import classes from './LargeVideoPlayer.module.css'
 
@@ -26,6 +27,10 @@ const LargeVideoPlayer = ({ data }: any) => {
     views: 'Views: ',
     likes: 'Likes: ',
     published: `Published on: ${date}`,
+    buttonLabel: `Watch ${decode(
+      data?.items[0].snippet?.title || 'Video Title'
+    )} on Youtube`,
+    buttonText: 'Watch video on Youtube',
   }
 
   useEffect(() => {
@@ -34,7 +39,7 @@ const LargeVideoPlayer = ({ data }: any) => {
 
   return (
     <>
-      <Card className={classes.videocard} padding="md" withBorder>
+      <Card className={classes.videocard} padding="md" withBorder mt="md">
         <Card.Section className={classes.ytiframe} ref={ref}>
           <iframe
             className={classes.iframe}
@@ -111,8 +116,16 @@ const LargeVideoPlayer = ({ data }: any) => {
           href={`//www.youtube.com/watch?v=${data?.items[0]?.id}`}
           mt="sm"
           aria-label={`Watch ${decode(displayText.title)} on Youtube`}
+          onClick={() => {
+            gaEvent({
+              name: 'go to youtube video',
+              category: 'click',
+              label: displayText.buttonLabel,
+              value: `//www.youtube.com/playlist?list=${data?.id}`,
+            })
+          }}
         >
-          Watch video on Youtube
+          {displayText.buttonText}
         </Button>
         <Text className={classes.description} ta="left" size="md" mt="lg">
           {displayText.description}

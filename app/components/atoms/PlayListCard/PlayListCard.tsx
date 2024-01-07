@@ -2,6 +2,7 @@ import { Button, Card, Text, Title } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
 import { Link } from '@remix-run/react'
 import { decode } from 'html-entities'
+import { gaEvent } from '~/utils/gtags.client'
 import { createSrcSet, sixteenByNine } from '~/utils/utils'
 import classes from './PlayListCard.module.css'
 
@@ -65,6 +66,14 @@ const PlayListCard = ({ data }: any) => {
           href={`//www.youtube.com/playlist?list=${data?.id}`}
           mt="sm"
           aria-label={displayText.buttonLabel}
+          onClick={() => {
+            gaEvent({
+              name: 'go to youtube playlist',
+              category: 'click',
+              label: displayText.buttonLabel,
+              value: `//www.youtube.com/playlist?list=${data?.id}`,
+            })
+          }}
         >
           {displayText.buttonText}
         </Button>

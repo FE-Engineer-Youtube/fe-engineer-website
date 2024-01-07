@@ -5,7 +5,7 @@ import type {
   LoaderFunctionArgs,
   MetaFunction,
 } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 import PlayListItemCard from '~/components/atoms/PlayListItemCard'
 import Pagination from '~/components/molecules/pagination'
 import Splash from '~/components/organisms/splash'
@@ -14,7 +14,7 @@ import { cache } from '~/utils/db.server'
 
 export const meta: MetaFunction = (data: any) => {
   return [
-    { title: 'FE Engineer channel Youtube videos | FE-Engineer' },
+    { title: 'FE Engineer Youtube channel videos | FE-Engineer' },
     {
       name: 'description',
       content: `Youtube videos for FE-Engineer channel.  Videos cover a wide variety of topics including: AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, and more!`,
@@ -41,10 +41,6 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
     cache.set(`videos-${results}-${page}`, videosData, 60 * 60 * 8)
   }
   return { videosData, page }
-}
-
-export const handle = {
-  breadcrumb: () => <Link to="/videos">Videos</Link>,
 }
 
 const displayText = {

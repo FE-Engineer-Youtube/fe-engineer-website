@@ -3,6 +3,7 @@ import { useResizeObserver } from '@mantine/hooks'
 import { Link } from '@remix-run/react'
 import { decode } from 'html-entities'
 import { useEffect, useState } from 'react'
+import { gaEvent } from '~/utils/gtags.client'
 import { createSrcSet, sixteenByNine } from '~/utils/utils'
 import classes from './PlayListItemCard.module.css'
 
@@ -80,6 +81,19 @@ const PlayListItemCard = ({ data }: any) => {
           }`}
           mt="sm"
           aria-label={displayText.buttonLabel}
+          onClick={() => {
+            gaEvent({
+              name: 'go to youtube video with playlist',
+              category: 'click',
+              label: displayText.buttonLabel,
+              value: `//www.youtube.com/watch?v=${
+                data?.snippet?.resourceId?.videoId || data?.id?.videoId
+              }${
+                data?.snippet?.playlistId &&
+                '&list=' + data?.snippet?.playlistId
+              }`,
+            })
+          }}
         >
           {displayText.buttonText}
         </Button>

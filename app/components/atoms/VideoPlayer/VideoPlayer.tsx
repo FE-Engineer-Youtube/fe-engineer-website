@@ -2,6 +2,7 @@ import { Button, Card, Text, Title } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
 import { decode } from 'html-entities'
 import { useEffect, useState } from 'react'
+import { gaEvent } from '~/utils/gtags.client'
 import { sixteenByNine } from '~/utils/utils'
 import classes from './VideoPlayer.module.css'
 
@@ -71,6 +72,14 @@ const VideoPlayer = ({ data }: any) => {
           radius={'xl'}
           color="ytRed"
           aria-label={displayText.buttonLabel}
+          onClick={() => {
+            gaEvent({
+              name: 'go to youtube video',
+              category: 'click',
+              label: displayText.buttonLabel,
+              value: `//www.youtube.com/watch?v=${videoId}`,
+            })
+          }}
         >
           {displayText.buttonText}
         </Button>

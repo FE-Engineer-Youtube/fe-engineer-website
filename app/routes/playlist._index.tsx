@@ -1,6 +1,6 @@
 import { Group, Text, Title } from '@mantine/core'
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
-import { Link, useMatches } from '@remix-run/react'
+import { useMatches } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import PlayListCard from '~/components/atoms/PlayListCard'
 import Splash from '~/components/organisms/splash'
@@ -11,7 +11,7 @@ export const meta: MetaFunction = (data: any) => {
     keywords.push(item?.snippet?.title || '')
   })
   return [
-    { title: 'FE-Engineer Video Playlists on Youtube | FE-Engineer' },
+    { title: 'Youtube Video Playlists | FE-Engineer' },
     {
       name: 'description',
       content: `Playlists of videos for FE-Engineer channel on Youtube.  Videos cover a wide variety of topics including: AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, and more!`,
@@ -25,10 +25,6 @@ export const meta: MetaFunction = (data: any) => {
       }`,
     },
   ]
-}
-
-export const handle = {
-  breadcrumb: () => <Link to="/playlist">Playlists</Link>,
 }
 
 export const loader: LoaderFunction = async () => {

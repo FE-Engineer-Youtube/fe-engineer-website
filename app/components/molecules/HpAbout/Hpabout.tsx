@@ -1,6 +1,7 @@
 import { Button, Divider, Group, Stack, Text, Title } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { CountUp } from 'use-count-up'
+import { gaEvent } from '~/utils/gtags.client'
 import classes from './Hpabout.module.css'
 
 const Hpabout = ({ channelData }: any) => {
@@ -115,6 +116,14 @@ const Hpabout = ({ channelData }: any) => {
             justify="center"
             radius="xl"
             aria-label={displayText.buttonLabel}
+            onClick={() => {
+              gaEvent({
+                name: 'go to youtube channel',
+                category: 'click',
+                label: displayText.buttonLabel,
+                value: `//www.youtube.com/channel/${channelData?.items[0]?.id}`,
+              })
+            }}
           >
             {displayText.buttonText}
           </Button>
