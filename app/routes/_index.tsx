@@ -1,7 +1,7 @@
 import { Divider, Group, Stack, Title } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 import VideoPlayer from '~/components/atoms/VideoPlayer'
 import Hpabout from '~/components/molecules/HpAbout'
 import Splash from '~/components/organisms/splash'
@@ -10,7 +10,7 @@ import { cache } from '~/utils/db.server'
 
 export const meta: MetaFunction = (data: any) => {
   return [
-    { title: 'FE-Engineer' },
+    { title: 'FE-Engineer Youtube' },
     {
       name: 'description',
       content:
@@ -21,10 +21,6 @@ export const meta: MetaFunction = (data: any) => {
       content: `Homelab, Software Engineering, How-to, Networking, Proxies, AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, FE Engineer, FE-Engineer, FE Engineer Youtube, FE-Engineer Youtube, FE Engineer Channel Youtube, FE-Engineer Channel Youtube`,
     },
   ]
-}
-
-export const handle = {
-  breadcrumb: () => <Link to="/">Home</Link>,
 }
 
 export const loader: LoaderFunction = async () => {
@@ -52,6 +48,7 @@ export const loader: LoaderFunction = async () => {
 export default function Index() {
   const { channelData, activitiesData }: any = useLoaderData()
   const { ref, width } = useElementSize()
+
   return (
     <>
       {channelData && <Hpabout channelData={channelData} />}

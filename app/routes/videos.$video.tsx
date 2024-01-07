@@ -4,10 +4,13 @@ import { Link, useLoaderData } from '@remix-run/react'
 import LargeVideoPlayer from '~/components/atoms/LargeVideoPlayer'
 import Splash from '~/components/organisms/splash'
 import { getVideo } from '~/models/fetchYT.server'
+import classes from '~/styles/root.styles.module.css'
 import { cache } from '~/utils/db.server'
 
 export const meta: MetaFunction = ({ data }: any) => {
-  const title = data?.videoData?.items[0]?.snippet?.title || 'Video Title'
+  const title = `${
+    data?.videoData?.items[0]?.snippet?.title || 'Video Title'
+  } | Youtube Video | FE-Engineer`
   const description =
     data?.videoData?.items[0]?.snippet?.description
       .replace(/(\r\n|\n|\r|)\s+/gm, ' ')
@@ -28,7 +31,11 @@ export const meta: MetaFunction = ({ data }: any) => {
 }
 
 export const handle = {
-  breadcrumb: () => <Link to={`/video/${'videoid'}`}>Some Video</Link>,
+  breadcrumb: ({ data }: any) => (
+    <Link className={classes.breadcrumbLink} to={`/videos/${'videoid'}`}>
+      {data?.videoData?.items[0]?.snippet?.title}
+    </Link>
+  ),
 }
 
 export const loader: LoaderFunction = async (args: any) => {

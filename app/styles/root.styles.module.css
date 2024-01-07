@@ -12,7 +12,16 @@
   text-decoration-color: var(--mantine-color-ytRed-9);
 }
 
+.breadcrumbLink {
+  color: var(--mantine-color-ytRed-text);
+  text-decoration: none;
+}
+
 :global {
+  div.mantine-Breadcrumbs-breadcrumb:last-child a {
+    color: var(--matine-color-text);
+    text-decoration: underline;
+  }
   .navLink {
     font-weight: 700;
     text-decoration: none;

@@ -1,6 +1,7 @@
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
-import { Outlet } from '@remix-run/react'
+import { Link, Outlet } from '@remix-run/react'
 import { getPlayLists } from '~/models/fetchYT.server'
+import classes from '~/styles/root.styles.module.css'
 import { cache } from '~/utils/db.server'
 
 export const meta: MetaFunction = (data: any) => {
@@ -18,6 +19,14 @@ export const loader: LoaderFunction = async () => {
   }
 
   return { playListData }
+}
+
+export const handle = {
+  breadcrumb: () => (
+    <Link className={classes.breadcrumbLink} to="/playlist">
+      Playlists
+    </Link>
+  ),
 }
 
 export default function Playlist() {

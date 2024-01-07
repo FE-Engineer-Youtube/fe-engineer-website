@@ -6,10 +6,10 @@ import {
   type MetaFunction,
 } from '@remix-run/node'
 import { Link, useLoaderData, useMatches } from '@remix-run/react'
-import { useEffect, useState } from 'react'
 import PlayListItemCard from '~/components/atoms/PlayListItemCard'
 import Splash from '~/components/organisms/splash'
 import { getPlayListItems } from '~/models/fetchYT.server'
+import classes from '~/styles/root.styles.module.css'
 import { cache } from '~/utils/db.server'
 import { findIndex } from '~/utils/utils'
 
@@ -59,33 +59,43 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
 }
 
 export const handle = {
-  breadcrumb: () => <Link to="/">Home</Link>,
+  breadcrumb: (data: any) => {
+    console.log(data)
+    return (
+      <Link className={classes.breadcrumbLink} to="/">
+        {`${
+          data?.data?.playListItemsData?.items[
+            findIndex(
+              data?.data?.playListItemsData?.items,
+              data?.params?.playlist,
+              'playlistId',
+              true
+            )
+          ]?.snippet?.title || 'Playlist Title'
+        }`}
+      </Link>
+    )
+  },
 }
 
 export default function PlayListItemPage() {
   const matches: any = useMatches()
-  const [matchesData, setMatches]: any = useState(null)
   const title =
-    matchesData &&
-    matchesData[1]?.data?.playListData?.items[
+    matches[1]?.data?.playListData?.items[
       findIndex(
-        matchesData[1]?.data?.playListData?.items,
-        matchesData[2]?.params?.playlist
+        matches[1]?.data?.playListData?.items,
+        matches[2]?.params?.playlist
       )
-    ]?.snippet?.title
+    ]?.snippet?.title || 'Playlist Title'
   const { playListItemsData }: any = useLoaderData()
 
   const displayText = {
     title: title || 'Playlist Title',
   }
 
-  useEffect(() => {
-    setMatches(matches)
-  }, [matches])
-
   return (
     <>
-      <Title ta="center" order={1} pt={64} pb={48}>
+      <Title ta="center" order={1} mt={64} pb={48}>
         <Text
           inherit
           variant="gradient"

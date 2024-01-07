@@ -1,5 +1,6 @@
 import {
   AppShell,
+  Breadcrumbs,
   ColorSchemeScript,
   Container,
   Group,
@@ -20,8 +21,12 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useLocation,
+  useMatches,
 } from '@remix-run/react'
+import React, { useEffect } from 'react'
 import classes from '~/styles/root.styles.module.css'
+import * as gtag from '~/utils/gtags.client'
 import { theme } from './utils/theme'
 
 export const links: LinksFunction = () => [
@@ -62,14 +67,23 @@ export const links: LinksFunction = () => [
 ]
 
 export async function loader() {
-  console.log(process)
   // expose env variable to client on purpose
   const ga = process?.env?.GA || 'no_ga_found'
   return { ga }
 }
 
+export const handle = {
+  breadcrumb: () => (
+    <Link className={classes.breadcrumbLink} to="/">
+      Home
+    </Link>
+  ),
+}
+
 export default function App() {
-  const { ga }: any = useLoaderData()
+  const location = useLocation()
+  const matches = useMatches()
+  const { ga }: any = useLoaderData<typeof loader>()
   const displayText = {
     nav: [
       {
@@ -82,6 +96,12 @@ export default function App() {
       },
     ],
   }
+
+  useEffect(() => {
+    if (ga.length) {
+      gtag.pageview(location.pathname, ga)
+    }
+  }, [location, ga])
 
   return (
     <html lang="en">
@@ -97,6 +117,7 @@ export default function App() {
           src={`https://www.googletagmanager.com/gtag/js?id=${ga}`}
         ></script>
         <script
+          async
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -152,6 +173,18 @@ export default function App() {
               </Group>
             </AppShell.Header>
             <AppShell.Main>
+              <Breadcrumbs separator="⟩">
+                {matches
+                  .filter(
+                    (match: any) => match.handle && match.handle?.breadcrumb
+                  )
+                  .map((match: any, index) => (
+                    <React.Fragment key={index}>
+                      {match.handle.breadcrumb(match)}
+                    </React.Fragment>
+                  ))}
+              </Breadcrumbs>
+
               <Container size={1280}>
                 <Outlet />
               </Container>
