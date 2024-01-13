@@ -1,62 +1,34 @@
-import { Button, Group, Text } from '@mantine/core'
+import { Button, Group } from '@mantine/core'
 import { Link } from '@remix-run/react'
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
-import classes from './Pagination.module.css'
 
-const Pagination = ({ pagination, page, videosData, paginationTotal }: any) => {
+const Pagination = ({ page, prev, next }: any) => {
   return (
     <Group
       w="100%"
       justify="center"
       mb="md"
       mt="md"
-      aria-label={`Pagination controls: currently on page ${page} of ${paginationTotal}`}
+      aria-label={`Pagination controls: you are currently on page ${page}`}
     >
       <Button
-        aria-label={'Previous'}
-        disabled={page === 1}
+        aria-label={'Go to previous page'}
+        disabled={!prev}
         color="ytRed"
         size="xs"
         component={Link}
-        to={`/videos?page=${page - 1}&pageToken=${videosData?.prevPageToken}`}
+        to={`/videos?page=${page - 1}&pageToken=${prev}`}
       >
         <IconArrowLeft />
       </Button>
-      {pagination?.range?.length > 0 &&
-        pagination?.range?.map((item: any, index: number) => {
-          if (typeof item === 'number') {
-            return (
-              <Button
-                aria-label={`pagination indicator for page ${item}`}
-                key={`${item}-${index}`}
-                size={page === item ? 'sm' : 'xs'}
-                disabled
-                // className={`${page === item ? 'classes.active' : ''}`}
-                className={item === page ? classes.active : ''}
-              >
-                {item}
-              </Button>
-            )
-          }
-          if (typeof item === 'string') {
-            return (
-              <Text
-                aria-label={
-                  'pagination indicator showing there are more pages than are currently being shown.'
-                }
-              >
-                {'. . .'}
-              </Text>
-            )
-          }
-        })}
+
       <Button
-        aria-label={'Next'}
-        disabled={page === paginationTotal}
+        aria-label={'Go to next page'}
+        disabled={!next}
         color="ytRed"
         size="xs"
         component={Link}
-        to={`/videos?page=${page + 1}&pageToken=${videosData?.nextPageToken}`}
+        to={`/videos?page=${page + 1}&pageToken=${next}`}
       >
         <IconArrowRight />
       </Button>
