@@ -37,8 +37,8 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
   if (cache.has(`videos-${results}-${page}`)) {
     videosData = await cache.get(`videos-${results}-${page}`)
   } else {
-    videosData = await getAllVideos(results, pageToken)
-    cache.set(`videos-${results}-${page}`, videosData, 60 * 60 * 8)
+  videosData = await getAllVideos(results, pageToken)
+  cache.set(`videos-${results}-${page}`, videosData, 60 * 60 * 8)
   }
   return { videosData, page }
 }
@@ -49,10 +49,9 @@ const displayText = {
 
 export default function Playlist() {
   const { videosData, page }: any = useLoaderData()
-  const paginationTotal = Math.floor(
-    videosData?.pageInfo?.totalResults / videosData?.pageInfo?.resultsPerPage
-  )
-  const pagination = usePagination({ total: paginationTotal, initialPage: 1 })
+  const nextPageToken = videosData?.nextPageToken
+  const prevPageToken = videosData?.prevPageToken
+  const pagination = usePagination({ total: 1, initialPage: 1 })
 
   return (
     <>
@@ -70,9 +69,9 @@ export default function Playlist() {
         <>
           <Pagination
             page={page}
-            videosData={videosData}
             pagination={pagination}
-            paginationTotal={paginationTotal}
+            next={nextPageToken}
+            prev={prevPageToken}
           />
           {videosData?.items.length > 0 && (
             <Group justify="center" align="normal">
@@ -81,11 +80,17 @@ export default function Playlist() {
               })}
             </Group>
           )}
+          {videosData?.items.length <= 0 && (
+            <>
+              <Text>{`Youtube API is not very good, there is no reasonable way to actually ensure that we do not get a page of search results with no items in it.`}</Text>
+              <Text>{`:(`}</Text>
+            </>
+          )}
           <Pagination
             page={page}
-            videoData={videosData}
             pagination={pagination}
-            paginationTotal={paginationTotal}
+            next={nextPageToken}
+            prev={prevPageToken}
           />
         </>
       )}
