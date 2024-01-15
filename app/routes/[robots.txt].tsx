@@ -4,7 +4,7 @@ export const loader = () => {
         Disallow: /nogooglebot/
         User-agent: *
         Allow: /
-        Sitemap: /sitemap.xml`
+        Sitemap: https://fe-engineer.com/sitemap.xml`
 
   return new Response(robotText, {
     status: 200,
