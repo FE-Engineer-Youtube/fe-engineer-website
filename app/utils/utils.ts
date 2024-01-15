@@ -5,7 +5,9 @@ export const sixteenByNine = (width: number) => {
 export const createSrcSet = (thumbnails: any) => {
   let srcSet: string[] = []
   Object.keys(thumbnails).forEach((item: any) => {
-    srcSet.push(`${thumbnails[item].url} ${thumbnails[item].width}w`)
+    if (thumbnails[item].width < 700) {
+      srcSet.push(`${thumbnails[item].url} ${thumbnails[item].width}w`)
+    }
   })
   return srcSet.join()
 }
