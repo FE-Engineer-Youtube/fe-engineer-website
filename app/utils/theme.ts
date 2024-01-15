@@ -18,4 +18,9 @@ export const theme = createTheme({
   colors: {
     ytRed,
   },
+  fontFamily: 'Open Sans, sans-serif',
+  fontFamilyMonospace: 'Inconsolata, monospace',
+  headings: {
+    fontFamily: 'Roboto, serif',
+  },
 })

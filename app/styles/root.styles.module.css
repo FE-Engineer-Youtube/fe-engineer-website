@@ -25,8 +25,11 @@
   .navLink {
     font-weight: 700;
     text-decoration: none;
-    padding-left: var(--mantine-spacing-md);
     color: var(--mantine-color-text);
+    margin-bottom: var(--mantine-spacing-xs);
+  }
+  .navLink:hover {
+    text-decoration: underline;
   }
   .navLink.active {
     text-decoration: underline;

@@ -1,6 +1,7 @@
 import {
   AppShell,
   Breadcrumbs,
+  Burger,
   ColorSchemeScript,
   Container,
   Group,
@@ -9,6 +10,7 @@ import {
   Title,
 } from '@mantine/core'
 import '@mantine/core/styles.css'
+import { useDisclosure } from '@mantine/hooks'
 import { cssBundleHref } from '@remix-run/css-bundle'
 import type { LinksFunction } from '@remix-run/node'
 import {
@@ -83,6 +85,8 @@ export const handle = {
 export default function App() {
   const location = useLocation()
   const matches = useMatches()
+  const [mobileOpened, { toggle: toggleMobile }] = useDisclosure()
+  const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure()
   const { ga }: any = useLoaderData<typeof loader>()
   const displayText = {
     nav: [
@@ -135,6 +139,11 @@ export default function App() {
             transitionDuration={350}
             transitionTimingFunction="ease"
             padding="md"
+            navbar={{
+              width: 120,
+              breakpoint: 'sm',
+              collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
+            }}
           >
             <AppShell.Header>
               <Group h="100%" w="100%" px="md" justify="space-between">
@@ -150,27 +159,38 @@ export default function App() {
                     </Text>
                   </Title>
                 </Link>
-                {/* <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" /> */}
-                <nav>
-                  {displayText.nav.map((item) => {
-                    return (
-                      <NavLink
-                        key={item.text}
-                        className={({ isActive, isPending }) =>
-                          isPending
-                            ? 'navLink pending'
-                            : isActive
-                            ? 'navLink active'
-                            : 'navLink'
-                        }
-                        to={item.url}
-                      >
-                        {item.text}
-                      </NavLink>
-                    )
-                  })}
-                </nav>
+                <Burger
+                  opened={mobileOpened}
+                  onClick={toggleMobile}
+                  hiddenFrom="sm"
+                  size="sm"
+                />
+                <Burger
+                  opened={desktopOpened}
+                  onClick={toggleDesktop}
+                  visibleFrom="sm"
+                  size="sm"
+                />
               </Group>
+              <AppShell.Navbar p="md">
+                {displayText?.nav.map((item) => {
+                  return (
+                    <NavLink
+                      key={item.text}
+                      className={({ isActive, isPending }) =>
+                        isPending
+                          ? 'navLink pending'
+                          : isActive
+                          ? 'navLink active'
+                          : 'navLink'
+                      }
+                      to={item.url}
+                    >
+                      {item.text}
+                    </NavLink>
+                  )
+                })}
+              </AppShell.Navbar>
             </AppShell.Header>
             <AppShell.Main>
               <Breadcrumbs separator="⟩">
@@ -196,6 +216,12 @@ export default function App() {
           <LiveReload />
         </MantineProvider>
       </body>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Open+Sans&family=Roboto:wght@500&display=swap"
+        rel="stylesheet"
+      />
     </html>
   )
 }
