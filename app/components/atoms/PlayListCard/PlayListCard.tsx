@@ -16,7 +16,7 @@ const PlayListCard = ({ data }: any) => {
     itemCount: `${data.contentDetails.itemCount || '?'} videos`,
     alt: `Video Thumbnail for ${data?.snippet?.title || 'Playlist Title'}`,
     sizes:
-      '(max-width: 319px) 320px,(max-width: 479px) 320px,(max-width: 600px) 480px, (max-width: 768px) 640px, 1280px',
+      '(max-width: 319px) 320px,(max-width: 479px) 320px,(max-width: 600px) 480px, (max-width: 768px) 640px',
     buttonText: 'Watch playlist on Youtube',
     buttonLabel: `Watch ${decode(
       data?.snippet?.title || 'Playlist Title'
