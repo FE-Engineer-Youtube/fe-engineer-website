@@ -164,12 +164,14 @@ export default function App() {
                   onClick={toggleMobile}
                   hiddenFrom="sm"
                   size="sm"
+                  aria-label="Toggle navigation panel open/close"
                 />
                 <Burger
                   opened={desktopOpened}
                   onClick={toggleDesktop}
                   visibleFrom="sm"
                   size="sm"
+                  aria-label="Toggle navigation panel open/close"
                 />
               </Group>
               <AppShell.Navbar p="md">
@@ -215,13 +217,13 @@ export default function App() {
           <Scripts />
           <LiveReload />
         </MantineProvider>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Open+Sans&family=Roboto:wght@500&display=swap"
+          rel="stylesheet"
+        ></link>
       </body>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Open+Sans&family=Roboto:wght@500&display=swap"
-        rel="stylesheet"
-      />
     </html>
   )
 }
