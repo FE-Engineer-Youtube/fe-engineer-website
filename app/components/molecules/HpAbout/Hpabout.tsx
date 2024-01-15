@@ -107,7 +107,7 @@ const Hpabout = ({ channelData }: any) => {
         </>
       )}
       {channelData?.items[0]?.id && (
-        <Stack mt="md" align="center">
+        <Stack mt="md" mb="md" align="center">
           <Button
             component="a"
             target="_blank"

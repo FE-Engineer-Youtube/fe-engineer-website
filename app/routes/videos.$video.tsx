@@ -10,7 +10,7 @@ import { cache } from '~/utils/db.server'
 export const meta: MetaFunction = ({ data }: any) => {
   const title = `${
     data?.videoData?.items[0]?.snippet?.title || 'Video Title'
-  } | Youtube Video | FE-Engineer`
+  }`
   const description =
     data?.videoData?.items[0]?.snippet?.description
       .replace(/(\r\n|\n|\r|)\s+/gm, ' ')

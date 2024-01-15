@@ -21,7 +21,7 @@ export const meta: MetaFunction = (data: any) => {
         data?.matches[2]?.params?.playlist
       )
     ]?.snippet?.title || 'Playlist Title'
-  } | Youtube Playlist | FE-Engineer`
+  }`
 
   const description =
     data?.matches[1]?.data?.playListData?.items[
@@ -32,7 +32,7 @@ export const meta: MetaFunction = (data: any) => {
     ]?.snippet?.description || 'Playlist Description'
 
   return [
-    { title: `${title} | FE-Engineer` },
+    { title: `${title} | Youtube Playlist | FE-Engineer` },
     {
       name: 'description',
       content: `${description}`,
