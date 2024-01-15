@@ -10,6 +10,7 @@ import PlayListItemCard from '~/components/atoms/PlayListItemCard'
 import Pagination from '~/components/molecules/pagination'
 import Splash from '~/components/organisms/splash'
 import { getAllVideos } from '~/models/fetchYT.server'
+import { cache } from '~/utils/db.server'
 
 export const meta: MetaFunction = (data: any) => {
   return [
@@ -30,15 +31,15 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
   const pageNumber = url.searchParams.get('page') || '1'
   const pageToken = url.searchParams.get('pageToken') || ''
   const page = parseInt(pageNumber ?? '1')
-  let videosData = {}
+  let videosData
   const results = 12
 
-  // if (cache.has(`videos-${results}-${page}`)) {
-  //   videosData = await cache.get(`videos-${results}-${page}`)
-  // } else {
+  if (cache.has(`videos-${results}-${page}`)) {
+    videosData = await cache.get(`videos-${results}-${page}`)
+  } else {
   videosData = await getAllVideos(results, pageToken)
-  // cache.set(`videos-${results}-${page}`, videosData, 60 * 60 * 8)
-  // }
+  cache.set(`videos-${results}-${page}`, videosData, 60 * 60 * 8)
+  }
   return { videosData, page }
 }
 
