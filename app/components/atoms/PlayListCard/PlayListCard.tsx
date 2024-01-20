@@ -18,9 +18,6 @@ const PlayListCard = ({ data }: any) => {
     sizes:
       '(max-width: 319px) 320px,(max-width: 479px) 320px,(max-width: 600px) 480px, (max-width: 768px) 640px',
     buttonText: 'Watch playlist on Youtube',
-    buttonLabel: `Watch ${decode(
-      data?.snippet?.title || 'Playlist Title'
-    )} playlist on Youtube`,
   }
 
   return (
@@ -65,12 +62,11 @@ const PlayListCard = ({ data }: any) => {
           radius="xl"
           href={`//www.youtube.com/playlist?list=${data?.id}`}
           mt="sm"
-          aria-label={displayText.buttonLabel}
           onClick={() => {
             gaEvent({
               name: 'go to youtube playlist',
               category: 'click',
-              label: displayText.buttonLabel,
+              label: displayText.buttonText,
               value: `//www.youtube.com/playlist?list=${data?.id}`,
             })
           }}
