@@ -11,13 +11,17 @@ import Pagination from '~/components/molecules/pagination'
 import Splash from '~/components/organisms/splash'
 import { getAllVideos } from '~/models/fetchYT.server'
 import { cache } from '~/utils/db.server'
+import { truncate } from '~/utils/utils'
 
 export const meta: MetaFunction = (data: any) => {
   return [
     { title: 'FE Engineer Youtube channel videos | FE-Engineer' },
     {
       name: 'description',
-      content: `Youtube videos for FE-Engineer channel.  Videos cover a wide variety of topics including: AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, and more!`,
+      content: truncate(
+        `Youtube videos for FE-Engineer channel.  Videos cover a wide variety of topics including: AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, and more!`,
+        157
+      ),
     },
     {
       name: 'keywords',
@@ -37,8 +41,8 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
   if (cache.has(`videos-${results}-${page}`)) {
     videosData = await cache.get(`videos-${results}-${page}`)
   } else {
-  videosData = await getAllVideos(results, pageToken)
-  cache.set(`videos-${results}-${page}`, videosData, 60 * 60 * 8)
+    videosData = await getAllVideos(results, pageToken)
+    cache.set(`videos-${results}-${page}`, videosData, 60 * 60 * 8)
   }
   return { videosData, page }
 }
@@ -55,18 +59,18 @@ export default function Playlist() {
 
   return (
     <>
-      <Title ta="center" order={1} mt={64} pb={48}>
-        <Text
-          inherit
-          variant="gradient"
-          component="span"
-          gradient={{ from: 'ytRed', to: 'blue' }}
-        >
-          {displayText.title}
-        </Text>
-      </Title>
       {videosData !== null && (
         <>
+          <Title ta="center" order={1} mt={64} pb={48}>
+            <Text
+              inherit
+              variant="gradient"
+              component="span"
+              gradient={{ from: 'ytRed', to: 'blue' }}
+            >
+              {displayText.title}
+            </Text>
+          </Title>
           <Pagination
             page={page}
             pagination={pagination}

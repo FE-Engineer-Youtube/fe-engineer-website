@@ -7,14 +7,17 @@ import Hpabout from '~/components/molecules/HpAbout'
 import Splash from '~/components/organisms/splash'
 import { getChannelDetails, getHPVideos } from '~/models/fetchYT.server'
 import { cache } from '~/utils/db.server'
+import { truncate } from '~/utils/utils'
 
 export const meta: MetaFunction = (data: any) => {
   return [
     { title: 'FE-Engineer Youtube' },
     {
       name: 'description',
-      content:
+      content: truncate(
         'Welcome to the website for FE-Engineer on Youtube.  Learn to build software and hardware at home to use AI, automation, and web tools for just about everything!',
+        157
+      ),
     },
     {
       name: 'keywords',

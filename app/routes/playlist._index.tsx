@@ -3,6 +3,7 @@ import type { LoaderFunction, MetaFunction } from '@remix-run/node'
 import { useMatches } from '@remix-run/react'
 import PlayListCard from '~/components/atoms/PlayListCard'
 import Splash from '~/components/organisms/splash'
+import { truncate } from '~/utils/utils'
 
 export const meta: MetaFunction = (data: any) => {
   let keywords: string[] = []
@@ -13,7 +14,10 @@ export const meta: MetaFunction = (data: any) => {
     { title: 'Youtube Video Playlists | FE-Engineer' },
     {
       name: 'description',
-      content: `Playlists of videos for FE-Engineer channel on Youtube.  Videos cover a wide variety of topics including: AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, and more!`,
+      content: truncate(
+        `Playlists of videos for FE-Engineer channel on Youtube.  Videos cover a wide variety of topics including: AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, and more!`,
+        157
+      ),
     },
     {
       name: 'keywords',
