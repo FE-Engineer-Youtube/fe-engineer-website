@@ -8,15 +8,13 @@ import classes from '~/styles/root.styles.module.css'
 import { cache } from '~/utils/db.server'
 
 export const meta: MetaFunction = ({ data }: any) => {
-  const title = `${
-    data?.videoData?.items[0]?.snippet?.title || 'Video Title'
-  }`
+  const title = `${data?.videoData?.items[0]?.snippet?.title || 'Video Title'}`
   const description =
     data?.videoData?.items[0]?.snippet?.description
       .replace(/(\r\n|\n|\r|)\s+/gm, ' ')
       .slice(0, 200) + '. . .' || 'Video Description'
   const keywords =
-    data?.videoData?.items[0]?.snippet?.tags.join(', ') || 'Video keywords'
+    data?.videoData?.items[0]?.snippet?.tags?.join(', ') || 'Video keywords'
   return [
     { title: `${title} | Youtube Video | FE-Engineer` },
     {
