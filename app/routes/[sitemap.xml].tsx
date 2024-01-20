@@ -5,11 +5,11 @@ import { cache } from '~/utils/db.server'
 export const loader: LoaderFunction = async () => {
   // move to env or something at some point
   const baseURL = 'https://fe-engineer.com/'
-  const makeXML = (location: string, title: string, priority: number, date?: string) => {
+  const makeXML = (location: string, priority: number, date?: string) => {
     return `<url>
     <loc>${baseURL}${location}</loc>
-    <title>${title}</title>
     ${date ? `<lastmod>${date}</lastmod>` : ''}
+    <changefreq>${priority === 1 ? 'weekly' : 'monthly'}</changefreq>
     <priority>${priority.toFixed(1)}</priority>
     </url>`
   }
@@ -31,23 +31,31 @@ export const loader: LoaderFunction = async () => {
     recentvideos = await getRecentVideos(50)
     cache.set('50recentvideos', recentvideos, 60 * 60 * 24)
   }
-  
+
   // turn playlists into xml
-const playListPages = playListData?.items.map((playlist: any) => {
-  return makeXML(`playlist/${playlist?.id}`, playlist?.snippet?.title, 0.9, playlist?.snippet?.publishedAt)
-})
+  const playListPages = playListData?.items.map((playlist: any) => {
+    return makeXML(
+      `playlist/${playlist?.id}`,
+      0.9,
+      playlist?.snippet?.publishedAt
+    )
+  })
 
   // turn videos into xml
-const videosPages = recentvideos?.items.map((video: any) => {
-  return makeXML(`videos/${video?.id?.videoId}`, video?.snippet?.title, 0.9, video?.snippet?.publishedAt)
-})
+  const videosPages = recentvideos?.items.map((video: any) => {
+    return makeXML(
+      `videos/${video?.id?.videoId}`,
+      0.9,
+      video?.snippet?.publishedAt
+    )
+  })
 
-// The overall XML content to return, including dynamic data
+  // The overall XML content to return, including dynamic data
   const content = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${makeXML('', 'FE Engineer Youtube', 1)}
-      ${makeXML('playlist', 'Youtube Video Playlists | FE-Engineer', 1)}
+      ${makeXML('', 1)}
+      ${makeXML('playlist', 1)}
       ${playListPages.join('')}
-      ${makeXML('videos','FE Engineer Youtube channel videos | FE-Engineer', 1)}
+      ${makeXML('videos', 1)}
       ${videosPages.join('')}
       </urlset>`
 
