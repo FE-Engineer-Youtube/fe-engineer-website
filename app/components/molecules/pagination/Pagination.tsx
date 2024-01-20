@@ -13,22 +13,24 @@ const Pagination = ({ page, prev, next }: any) => {
     >
       <Button
         aria-label={'Go to previous page'}
-        disabled={!prev}
+        data-disabled={!prev}
         color="ytRed"
         size="xs"
         component={Link}
         to={`/videos?page=${page - 1}&pageToken=${prev}`}
+        onClick={(event) => (!prev ? event.preventDefault() : null)}
       >
         <IconArrowLeft />
       </Button>
 
       <Button
         aria-label={'Go to next page'}
-        disabled={!next}
+        data-disabled={!next}
         color="ytRed"
         size="xs"
         component={Link}
         to={`/videos?page=${page + 1}&pageToken=${next}`}
+        onClick={(event) => (!next ? event.preventDefault() : null)}
       >
         <IconArrowRight />
       </Button>
