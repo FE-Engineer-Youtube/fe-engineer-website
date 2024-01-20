@@ -6,20 +6,22 @@ import Splash from '~/components/organisms/splash'
 import { getVideo } from '~/models/fetchYT.server'
 import classes from '~/styles/root.styles.module.css'
 import { cache } from '~/utils/db.server'
+import { truncate } from '~/utils/utils'
 
 export const meta: MetaFunction = ({ data }: any) => {
   const title = `${data?.videoData?.items[0]?.snippet?.title || 'Video Title'}`
   const description =
-    data?.videoData?.items[0]?.snippet?.description
-      .replace(/(\r\n|\n|\r|)\s+/gm, ' ')
-      .slice(0, 200) + '. . .' || 'Video Description'
+    data?.videoData?.items[0]?.snippet?.description.replace(
+      /(\r\n|\n|\r|)\s+/gm,
+      ' '
+    ) || 'Video Description'
   const keywords =
     data?.videoData?.items[0]?.snippet?.tags?.join(', ') || 'Video keywords'
   return [
-    { title: `${title} | Youtube Video | FE-Engineer` },
+    { title: truncate(`${title} | Youtube Video | FE-Engineer`, 67) },
     {
       name: 'description',
-      content: `${description}`,
+      content: truncate(`${description}`, 157),
     },
     {
       name: 'keywords',
