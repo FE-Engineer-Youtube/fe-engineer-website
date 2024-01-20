@@ -24,9 +24,6 @@ const PlayListItemCard = ({ data }: any) => {
     sizes:
       '(max-width: 319px) 320px,(max-width: 479px) 320px,(max-width: 600px) 480px, (max-width: 768px) 640px, 1280px',
     buttonText: 'Watch Video on Youtube',
-    buttonLabel: `Watch ${decode(
-      data?.snippet?.title || 'Playlist Title'
-    )} on Youtube`,
   }
 
   useEffect(() => {
@@ -80,12 +77,11 @@ const PlayListItemCard = ({ data }: any) => {
             data?.snippet?.playlistId && '&list=' + data?.snippet?.playlistId
           }`}
           mt="sm"
-          aria-label={displayText.buttonLabel}
           onClick={() => {
             gaEvent({
               name: 'go to youtube video with playlist',
               category: 'click',
-              label: displayText.buttonLabel,
+              label: displayText.buttonText,
               value: `//www.youtube.com/watch?v=${
                 data?.snippet?.resourceId?.videoId || data?.id?.videoId
               }${

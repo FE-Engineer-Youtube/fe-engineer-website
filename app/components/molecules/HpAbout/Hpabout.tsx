@@ -115,7 +115,6 @@ const Hpabout = ({ channelData }: any) => {
             color="ytRed"
             justify="center"
             radius="xl"
-            aria-label={displayText.buttonLabel}
             onClick={() => {
               gaEvent({
                 name: 'go to youtube channel',
@@ -125,7 +124,7 @@ const Hpabout = ({ channelData }: any) => {
               })
             }}
           >
-            {displayText.buttonText}
+            {displayText.buttonLabel}
           </Button>
         </Stack>
       )}

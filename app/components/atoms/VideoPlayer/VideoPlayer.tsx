@@ -26,9 +26,6 @@ const VideoPlayer = ({ data }: any) => {
     title: `${data?.snippet?.title || 'Video Title'}`,
     description: data?.snippet?.description || 'Description',
     buttonText: 'Watch this video on Youtube',
-    buttonLabel: `Watch ${decode(
-      data?.snippet?.title || 'Video Title'
-    )} on Youtube`,
   }
 
   return (
@@ -71,12 +68,11 @@ const VideoPlayer = ({ data }: any) => {
           mt="md"
           radius={'xl'}
           color="ytRed"
-          aria-label={displayText.buttonLabel}
           onClick={() => {
             gaEvent({
               name: 'go to youtube video',
               category: 'click',
-              label: displayText.buttonLabel,
+              label: displayText.buttonText,
               value: `//www.youtube.com/watch?v=${videoId}`,
             })
           }}
