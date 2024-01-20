@@ -50,7 +50,7 @@ const LargeVideoPlayer = ({ data }: any) => {
             allowFullScreen
           />
         </Card.Section>
-        <Title ta="center" order={2} mb="lg" c="blue">
+        <Title ta="center" order={1} mb="lg" c="blue">
           <Text
             inherit
             variant="gradient"

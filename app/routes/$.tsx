@@ -1,6 +1,7 @@
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import Splash from '~/components/organisms/splash'
+import { truncate } from '~/utils/utils'
 
 export const meta: MetaFunction = ({ data }: any) => {
   return [
@@ -14,8 +15,10 @@ export const meta: MetaFunction = ({ data }: any) => {
 
 export const loader: LoaderFunction = async () => {
   const displayText = {
-    message:
+    message: truncate(
       'Sad day, it looks like the page you are looking for does not exist.  Maybe if you go back and try again it will be different the next time...',
+      157
+    ),
   }
   return { displayText }
 }
