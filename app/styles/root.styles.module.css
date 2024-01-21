@@ -13,17 +13,15 @@
 }
 
 .breadcrumbLink {
-  color: var(--mantine-color-ytRed-text);
+  color: var(--mantine-color-text);
   text-decoration: none;
+  font-weight: bold;
 }
 
 :global {
-  div.mantine-Breadcrumbs-breadcrumb:last-child a {
-    color: var(--matine-color-text);
-    text-decoration: underline;
-  }
   .navLink {
-    font-weight: 700;
+    font-weight: bold;
+    font-size: 18px;
     text-decoration: none;
     color: var(--mantine-color-text);
     margin-bottom: var(--mantine-spacing-xs);
