@@ -9,14 +9,23 @@ import { cache } from '~/utils/db.server'
 import { truncate } from '~/utils/utils'
 
 export const meta: MetaFunction = ({ data }: any) => {
-  const title = `${data?.videoData?.items[0]?.snippet?.title || 'Video Title'}`
+  const snippet = data?.videoData?.items[0]?.snippet
+  const contentDetails = data?.videoData?.items[0]?.contentDetails
+  const statistics = data?.videoData?.items[0]?.statistics
+
+  const title = `${snippet?.localized?.title || 'Video Title'}`
   const description =
-    data?.videoData?.items[0]?.snippet?.description.replace(
-      /(\r\n|\n|\r|)\s+/gm,
-      ' '
-    ) || 'Video Description'
-  const keywords =
-    data?.videoData?.items[0]?.snippet?.tags?.join(', ') || 'Video keywords'
+    snippet?.localized?.description.replace(/(\r\n|\n|\r|)\s+/gm, ' ') ||
+    'Video Description'
+  const keywords = snippet?.tags?.join(', ') || 'Video keywords'
+  const thumbnails = [
+    snippet?.thumbnails?.default?.url || '',
+    snippet?.thumbnails?.high?.url || '',
+    snippet?.thumbnails?.maxres?.url || '',
+    snippet?.thumbnails?.medium?.url || '',
+    snippet?.thumbnails?.standard?.url || '',
+  ]
+
   return [
     { title: truncate(`${title} | Youtube Video | FE-Engineer`, 67) },
     {
@@ -26,6 +35,37 @@ export const meta: MetaFunction = ({ data }: any) => {
     {
       name: 'keywords',
       content: `${keywords}`,
+    },
+    {
+      'script:ld+json': {
+        '@context': 'https://schema.org/',
+        '@type': ['VideoObject', 'LearningResource'],
+        name: title,
+        thumbnailUrl: thumbnails,
+        uploadDate: snippet?.publishedAt,
+        contentUrl: `https://www.youtube.com/embed/${data?.videoData?.items[0]?.id}`,
+        description: description,
+        duration: contentDetails?.duration,
+        learningResourceType: 'Problem walkthrough',
+        interactionStatistic: [
+          {
+            '@type': 'InteractionCounter',
+            interactionType: { '@type': 'CommentAction' },
+            userInteractionCount: +statistics?.commentCount,
+          },
+          {
+            '@type': 'InteractionCounter',
+            interactionType: { '@type': 'WatchAction' },
+            userInteractionCount: +statistics?.viewCount,
+          },
+          {
+            '@type': 'InteractionCounter',
+            interactionType: { '@type': 'LikeAction' },
+            userInteractionCount: +statistics?.likeCount,
+          },
+        ],
+        videoQuality: contentDetails?.definition,
+      },
     },
   ]
 }
