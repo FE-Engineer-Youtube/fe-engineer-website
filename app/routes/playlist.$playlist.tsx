@@ -11,7 +11,7 @@ import Splash from '~/components/organisms/splash'
 import { getPlayListItems } from '~/models/fetchYT.server'
 import classes from '~/styles/root.styles.module.css'
 import { cache } from '~/utils/db.server'
-import { findIndex, truncate } from '~/utils/utils'
+import { findIndex, truncate, truncateTitleLength } from '~/utils/utils'
 
 export const meta: MetaFunction = (data: any) => {
   const title = `${
@@ -30,9 +30,10 @@ export const meta: MetaFunction = (data: any) => {
         data?.matches[2]?.params?.playlist
       )
     ]?.snippet?.description || 'Playlist Description'
+  const titleEnd = ' | Youtube Playlist | FE-Engineer'
 
   return [
-    { title: truncate(`${title} | Youtube Playlist | FE-Engineer`, 67) },
+    { title: `${truncate(title, truncateTitleLength(titleEnd))}${titleEnd}` },
     {
       name: 'description',
       content: truncate(`${description}`, 157),
