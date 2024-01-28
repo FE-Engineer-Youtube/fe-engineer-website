@@ -6,7 +6,7 @@ import Splash from '~/components/organisms/splash'
 import { getVideo } from '~/models/fetchYT.server'
 import classes from '~/styles/root.styles.module.css'
 import { cache } from '~/utils/db.server'
-import { truncate } from '~/utils/utils'
+import { truncate, truncateTitleLength } from '~/utils/utils'
 
 export const meta: MetaFunction = ({ data }: any) => {
   const snippet = data?.videoData?.items[0]?.snippet
@@ -25,9 +25,10 @@ export const meta: MetaFunction = ({ data }: any) => {
     snippet?.thumbnails?.medium?.url || '',
     snippet?.thumbnails?.standard?.url || '',
   ]
+  const titleEnd = ' | Video | FE-Engineer'
 
   return [
-    { title: truncate(`${title} | Youtube Video | FE-Engineer`, 67) },
+    { title: `${truncate(title, truncateTitleLength(titleEnd))}${titleEnd}` },
     {
       name: 'description',
       content: truncate(`${description}`, 157),

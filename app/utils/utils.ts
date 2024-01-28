@@ -36,3 +36,7 @@ export const truncate = (str: string, length: number) => {
   }
   return str
 }
+
+export const truncateTitleLength = (str: string) => {
+  return 70 - str.length
+}
