@@ -35,7 +35,7 @@ export const meta: MetaFunction = ({ data }: any) => {
     },
     {
       name: 'keywords',
-      content: `${keywords}`,
+      content: `video, ${keywords}`,
     },
     {
       'script:ld+json': {
