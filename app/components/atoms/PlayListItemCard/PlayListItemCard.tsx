@@ -2,7 +2,6 @@ import { Button, Card, Text, Title } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
 import { Link } from '@remix-run/react'
 import { decode } from 'html-entities'
-import { useEffect, useState } from 'react'
 import { gaEvent } from '~/utils/gtags.client'
 import { createSrcSet, sixteenByNine } from '~/utils/utils'
 import classes from './PlayListItemCard.module.css'
@@ -10,9 +9,9 @@ import classes from './PlayListItemCard.module.css'
 const PlayListItemCard = ({ data }: any) => {
   const thumbnails = data.snippet.thumbnails
   const [ref, rect] = useResizeObserver()
-  const [date, setDate] = useState('')
   const videoId =
     data?.snippet?.resourceId?.videoId ?? data?.id?.videoId ?? null
+  const date = new Date(data?.snippet?.publishedAt).toLocaleDateString()
 
   const displayText = {
     title: data?.snippet?.title || 'Playlist Title',
@@ -25,10 +24,6 @@ const PlayListItemCard = ({ data }: any) => {
       '(max-width: 319px) 320px,(max-width: 479px) 320px,(max-width: 600px) 480px, (max-width: 768px) 640px, 1280px',
     buttonText: 'Watch Video on Youtube',
   }
-
-  useEffect(() => {
-    setDate(new Date(data?.snippet?.publishedAt).toLocaleDateString())
-  }, [])
 
   return (
     <>
