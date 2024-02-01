@@ -257,10 +257,15 @@ export function ErrorBoundary() {
             <Splash title={displayText?.title} message={displayText?.message} />
             <Card>
               <Title order={2} mt="sm" fw="normal" size={20}>
-                Status Text:
+                Error Text:
               </Title>
               <pre>
-                <code>{error?.statusText ?? 'null'}</code>
+                <code>
+                  {error?.stack ??
+                    error?.message ??
+                    error?.data ??
+                    'Unknown Error'}
+                </code>
               </pre>
             </Card>
             <Space h={64} />
