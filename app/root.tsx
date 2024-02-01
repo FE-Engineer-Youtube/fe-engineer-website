@@ -236,18 +236,18 @@ export function ErrorBoundary() {
   const error: any = useRouteError()
   const displayText = {
     title:
-      error.statusText === 'Not Found'
+      error?.data === '404 Not Found'
         ? 'four oh four... :('
         : `Error, gotta catch 'em all`,
     message:
-      error.statusText === 'Not Found'
+      error?.data === '404 Not Found'
         ? 'Sad day, it looks like the page you are looking for does not exist.  Maybe if you go back and try again it will be different the next time...'
         : 'Well, there went my saturday...looks like something broke... :-/',
   }
   return (
     <html>
       <head>
-        <title>{displayText.title}</title>
+        <title>{displayText?.title}</title>
         <Meta />
         <Links />
       </head>
