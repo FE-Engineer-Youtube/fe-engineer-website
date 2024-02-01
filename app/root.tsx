@@ -236,18 +236,18 @@ export function ErrorBoundary() {
   const error: any = useRouteError()
   const displayText = {
     title:
-      error.statusText === 'Not Found'
+      error?.data === '404 Not Found'
         ? 'four oh four... :('
         : `Error, gotta catch 'em all`,
     message:
-      error.statusText === 'Not Found'
+      error?.data === '404 Not Found'
         ? 'Sad day, it looks like the page you are looking for does not exist.  Maybe if you go back and try again it will be different the next time...'
         : 'Well, there went my saturday...looks like something broke... :-/',
   }
   return (
     <html>
       <head>
-        <title>{displayText.title}</title>
+        <title>{displayText?.title}</title>
         <Meta />
         <Links />
       </head>
@@ -257,10 +257,15 @@ export function ErrorBoundary() {
             <Splash title={displayText?.title} message={displayText?.message} />
             <Card>
               <Title order={2} mt="sm" fw="normal" size={20}>
-                Status Text:
+                Error Text:
               </Title>
               <pre>
-                <code>{error?.statusText ?? 'null'}</code>
+                <code>
+                  {error?.stack ??
+                    error?.message ??
+                    error?.data ??
+                    'Unknown Error'}
+                </code>
               </pre>
             </Card>
             <Space h={64} />
