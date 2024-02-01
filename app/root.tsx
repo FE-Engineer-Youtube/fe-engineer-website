@@ -2,10 +2,12 @@ import {
   AppShell,
   Breadcrumbs,
   Burger,
+  Card,
   ColorSchemeScript,
   Container,
   Group,
   MantineProvider,
+  Space,
   Text,
   Title,
 } from '@mantine/core'
@@ -25,10 +27,12 @@ import {
   useLoaderData,
   useLocation,
   useMatches,
+  useRouteError,
 } from '@remix-run/react'
 import React, { useEffect } from 'react'
 import classes from '~/styles/root.styles.module.css'
 import * as gtag from '~/utils/gtags.client'
+import Splash from './components/organisms/splash'
 import { theme } from './utils/theme'
 
 export const links: LinksFunction = () => [
@@ -216,6 +220,61 @@ export default function App() {
           <ScrollRestoration />
           <Scripts />
           <LiveReload />
+        </MantineProvider>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Open+Sans&family=Roboto:wght@500&display=swap"
+          rel="stylesheet"
+        ></link>
+      </body>
+    </html>
+  )
+}
+
+export function ErrorBoundary() {
+  const error: any = useRouteError()
+  const displayText = {
+    title:
+      error.statusText === 'Not Found'
+        ? 'four oh four... :('
+        : `Error, gotta catch 'em all`,
+    message:
+      error.statusText === 'Not Found'
+        ? 'Sad day, it looks like the page you are looking for does not exist.  Maybe if you go back and try again it will be different the next time...'
+        : 'Well, there went my saturday...looks like something broke... :-/',
+  }
+  return (
+    <html>
+      <head>
+        <title>{displayText.title}</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <MantineProvider theme={theme} defaultColorScheme="auto">
+          <Container size={1280}>
+            <Splash title={displayText?.title} message={displayText?.message} />
+            <Card>
+              <Title order={2} mt="sm" fw="normal" size={20}>
+                Status Text:
+              </Title>
+              <pre>
+                <code>{error?.statusText ?? 'null'}</code>
+              </pre>
+            </Card>
+            <Space h={64} />
+            <Card>
+              <Title order={2} mt="sm" fw="normal" size={20}>
+                Error
+              </Title>
+              <pre>
+                <code>{JSON.stringify(error, null, 2)}</code>
+              </pre>
+            </Card>
+          </Container>
+
+          <Scripts />
         </MantineProvider>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
