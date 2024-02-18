@@ -21,6 +21,9 @@ export default function handleRequest(
   remixContext: EntryContext,
   loadContext: AppLoadContext
 ) {
+
+  responseHeaders.set("Cache-Control", "public, max-age=60, s-maxage=60, stale-while-revalidate=300");
+  
   return isbot(request.headers.get("user-agent"))
     ? handleBotRequest(
         request,
@@ -35,6 +38,7 @@ export default function handleRequest(
         remixContext
       );
 }
+
 
 function handleBotRequest(
   request: Request,

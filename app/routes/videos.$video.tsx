@@ -1,5 +1,5 @@
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import LargeVideoPlayer from '~/components/atoms/LargeVideoPlayer'
 import Splash from '~/components/organisms/splash'
@@ -97,7 +97,16 @@ export const loader: LoaderFunction = async (args: any) => {
     cache.set(`video-${args?.params?.video}`, videoData, 60 * 60 * 8)
   }
 
-  return { videoData }
+  return json(
+    { videoData },
+    {
+      headers: {
+        'Cache-Control':
+          'public, max-age=43200, s-maxage=43200, stale-while-revalidate=604800',
+        'Cache-Tag': `video:id:${args?.params?.video}`,
+      },
+    }
+  )
 }
 
 export default function Index() {

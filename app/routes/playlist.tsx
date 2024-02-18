@@ -1,5 +1,5 @@
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
-import { Link, Outlet } from '@remix-run/react'
+import { Link, Outlet, json } from '@remix-run/react'
 import { getPlayLists } from '~/models/fetchYT.server'
 import classes from '~/styles/root.styles.module.css'
 import { cache } from '~/utils/db.server'
@@ -18,7 +18,15 @@ export const loader: LoaderFunction = async () => {
     cache.set('playlists', playListData, 60 * 30)
   }
 
-  return { playListData }
+  return json(
+    { playListData },
+    {
+      headers: {
+        'Cache-Control':
+          'public, max-age=3600, s-maxage=3600, stale-while-revalidate=43200',
+      },
+    }
+  )
 }
 
 export const handle = {
