@@ -14,7 +14,7 @@ import {
 import '@mantine/core/styles.css'
 import { useDisclosure } from '@mantine/hooks'
 import { cssBundleHref } from '@remix-run/css-bundle'
-import type { LinksFunction } from '@remix-run/node'
+import type { HeadersFunction, LinksFunction } from '@remix-run/node'
 import {
   Link,
   Links,
@@ -24,6 +24,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  json,
   useLoaderData,
   useLocation,
   useMatches,
@@ -72,10 +73,23 @@ export const links: LinksFunction = () => [
       ]),
 ]
 
+export const headers: HeadersFunction = () => ({
+  'Cache-Control':
+    'public, max-age=1, s-maxage=300, stale-while-revalidate=43200',
+})
+
 export async function loader() {
   // expose env variable to client on purpose
   const ga = process?.env?.GA || 'no_ga_found'
-  return { ga }
+  return json(
+    { ga },
+    {
+      headers: {
+        'Cache-Control':
+          'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400',
+      },
+    }
+  )
 }
 
 export const handle = {

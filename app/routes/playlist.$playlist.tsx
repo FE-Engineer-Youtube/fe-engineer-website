@@ -1,5 +1,6 @@
 import { Group, Text, Title } from '@mantine/core'
 import {
+  json,
   redirect,
   type LoaderFunction,
   type LoaderFunctionArgs,
@@ -56,7 +57,16 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
     cache.set(`playlist-${playListId}`, playListItemsData, 60 * 30)
   }
 
-  return { playListItemsData }
+  return json(
+    { playListItemsData },
+    {
+      headers: {
+        'Cache-Control':
+          'public, max-age=3600, s-maxage=3600, stale-while-revalidate=604800',
+        'Cache-Tag': `video:id:${args?.params?.video}`,
+      },
+    }
+  )
 }
 
 export const handle = {
