@@ -5,7 +5,7 @@ import type {
   LoaderFunctionArgs,
   MetaFunction,
 } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { json, useLoaderData, useMatches } from '@remix-run/react'
 import PlayListItemCard from '~/components/atoms/PlayListItemCard'
 import Pagination from '~/components/molecules/pagination'
 import Splash from '~/components/organisms/splash'
@@ -44,7 +44,15 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
     videosData = await getAllVideos(results, pageToken)
     cache.set(`videos-${results}-${page}`, videosData, 60 * 60 * 8)
   }
-  return { videosData, page }
+  return json(
+    { videosData, page },
+    {
+      headers: {
+        'Cache-Control':
+          'public, max-age=3600, s-maxage=3600, stale-while-revalidate=43200',
+      },
+    }
+  )
 }
 
 const displayText = {
@@ -56,6 +64,8 @@ export default function Playlist() {
   const nextPageToken = videosData?.nextPageToken
   const prevPageToken = videosData?.prevPageToken
   const pagination = usePagination({ total: 1, initialPage: 1 })
+  const matches = useMatches()
+  console.log(matches)
 
   return (
     <>
