@@ -1,11 +1,20 @@
-import { Button, Divider, Group, Stack, Text, Title } from '@mantine/core'
-import { useElementSize } from '@mantine/hooks'
+import {
+  Button,
+  Divider,
+  Flex,
+  Stack,
+  Text,
+  Title,
+  useMantineTheme,
+} from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { CountUp } from 'use-count-up'
 import { gaEvent } from '~/utils/gtags.client'
 import classes from './Hpabout.module.css'
 
 const Hpabout = ({ channelData }: any) => {
-  const { ref, width } = useElementSize()
+  const theme = useMantineTheme()
+  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
   const displayText = {
     title:
@@ -37,77 +46,41 @@ const Hpabout = ({ channelData }: any) => {
       <Text ta="left" component="span" size="md">
         {displayText.description}
       </Text>
-      <Divider mt="md" ref={ref} />
-      {width > 450 && (
-        <Group align="center" justify="space-between" mt="md">
-          {Object.keys(channelData?.items[0]?.statistics).map(
-            (item: any, index) => {
-              if (!item.includes('hidden')) {
-                return (
-                  <Stack key={`${item}-${index}`} gap={0}>
-                    <Text ta="center" size="xl">
-                      <CountUp
-                        isCounting
-                        end={+channelData?.items[0]?.statistics[item] || 9999}
-                        duration={3}
-                        formatter={(value) =>
-                          value.toLocaleString(undefined, {
-                            maximumFractionDigits: 0,
-                          })
-                        }
-                      />
-                    </Text>
-                    <Title
-                      className={classes.channelStats}
-                      order={2}
-                      ta="center"
-                      c="ytRed.9"
-                    >
-                      {item.replace(/count/i, 's')}
-                    </Title>
-                  </Stack>
-                )
-              }
+      <Divider mt="md" mb="xl" />
+
+      <Flex
+        align="center"
+        justify="space-between"
+        direction={mobile ? 'column' : 'row'}
+      >
+        {Object.keys(channelData?.items[0]?.statistics).map(
+          (item: any, index) => {
+            if (!item.includes('hidden')) {
+              return (
+                <Stack key={`${item}-${index}`} gap={0} mb="lg">
+                  <Title className={classes.channelStats} order={2} ta="center">
+                    {item.replace(/count/i, 's')}
+                  </Title>
+                  <Text ta="center" size="xl" c="text">
+                    <CountUp
+                      isCounting
+                      end={+channelData?.items[0]?.statistics[item] || 9999}
+                      duration={3}
+                      formatter={(value) =>
+                        value.toLocaleString(undefined, {
+                          maximumFractionDigits: 0,
+                        })
+                      }
+                    />
+                  </Text>
+                </Stack>
+              )
             }
-          )}
-        </Group>
-      )}
-      {width <= 450 && (
-        <>
-          {Object.keys(channelData?.items[0]?.statistics).map(
-            (item: any, index) => {
-              if (!item.includes('hidden')) {
-                return (
-                  <Stack key={`${item}-${index}`} gap={0} mt="md">
-                    <Text ta="center" size="xl">
-                      <CountUp
-                        isCounting
-                        end={+channelData?.items[0]?.statistics[item] || 9999}
-                        duration={3}
-                        formatter={(value) =>
-                          value.toLocaleString(undefined, {
-                            maximumFractionDigits: 0,
-                          })
-                        }
-                      />
-                    </Text>
-                    <Title
-                      className={classes.channelStats}
-                      order={2}
-                      ta="center"
-                      c="ytRed.9"
-                    >
-                      {item.replace(/count/i, 's')}
-                    </Title>
-                  </Stack>
-                )
-              }
-            }
-          )}
-        </>
-      )}
+          }
+        )}
+      </Flex>
       {channelData?.items[0]?.id && (
-        <Stack mt="md" mb="md" align="center">
+        <Stack mb="xl" align="center">
           <Button
             component="a"
             target="_blank"

@@ -65,7 +65,6 @@ export default function Playlist() {
   const prevPageToken = videosData?.prevPageToken
   const pagination = usePagination({ total: 1, initialPage: 1 })
   const matches = useMatches()
-  console.log(matches)
 
   return (
     <>
