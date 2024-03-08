@@ -1,26 +1,26 @@
 import {
   AppShell,
   Breadcrumbs,
-  Burger,
   Card,
   ColorSchemeScript,
   Container,
-  Group,
   MantineProvider,
   Space,
-  Text,
   Title,
 } from '@mantine/core'
 import '@mantine/core/styles.css'
-import { useDisclosure } from '@mantine/hooks'
 import { cssBundleHref } from '@remix-run/css-bundle'
-import type { HeadersFunction, LinksFunction } from '@remix-run/node'
+import {
+  LoaderFunctionArgs,
+  type HeadersFunction,
+  type LinksFunction,
+  type LoaderFunction,
+} from '@remix-run/node'
 import {
   Link,
   Links,
   LiveReload,
   Meta,
-  NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -31,10 +31,14 @@ import {
   useRouteError,
 } from '@remix-run/react'
 import React, { useEffect } from 'react'
+import Navigation from '~/components/molecules/Navigation'
+import Splash from '~/components/organisms/splash'
+import type { user } from '~/models/auth/auth.server'
+import { authenticator } from '~/models/auth/auth.server'
 import classes from '~/styles/root.styles.module.css'
 import * as gtag from '~/utils/gtags.client'
-import Splash from './components/organisms/splash'
-import { theme } from './utils/theme'
+import { theme } from '~/utils/theme'
+import Footer from './components/molecules/Footer'
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref
@@ -78,11 +82,14 @@ export const headers: HeadersFunction = () => ({
     'public, max-age=1, s-maxage=300, stale-while-revalidate=43200',
 })
 
-export async function loader() {
+export const loader: LoaderFunction = async ({
+  request,
+}: LoaderFunctionArgs) => {
+  let user: user = await authenticator.isAuthenticated(request)
   // expose env variable to client on purpose
-  const ga = process?.env?.GA || 'no_ga_found'
+  const ga = process?.env?.FB_MEASURE || 'no_ga_found'
   return json(
-    { ga },
+    { ga, user },
     {
       headers: {
         'Cache-Control':
@@ -103,21 +110,8 @@ export const handle = {
 export default function App() {
   const location = useLocation()
   const matches = useMatches()
-  const [mobileOpened, { toggle: toggleMobile }] = useDisclosure()
-  const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure()
-  const { ga }: any = useLoaderData<typeof loader>()
-  const displayText = {
-    nav: [
-      {
-        text: 'Videos',
-        url: '/videos',
-      },
-      {
-        text: 'Playlists',
-        url: '/playlist',
-      },
-    ],
-  }
+  const { ga, user }: { ga: string; user: user | null } =
+    useLoaderData<typeof loader>()
 
   useEffect(() => {
     if (ga.length) {
@@ -157,60 +151,9 @@ export default function App() {
             transitionDuration={350}
             transitionTimingFunction="ease"
             padding="md"
-            navbar={{
-              width: 120,
-              breakpoint: 'sm',
-              collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
-            }}
           >
             <AppShell.Header>
-              <Group h="100%" w="100%" px="md" justify="space-between">
-                <Link className={classes.logoLink} to="/">
-                  <Title className={classes.title} order={3}>
-                    <Text
-                      inherit
-                      variant="gradient"
-                      component="span"
-                      gradient={{ from: 'ytRed', to: 'blue' }}
-                    >
-                      FE-Engineer.com
-                    </Text>
-                  </Title>
-                </Link>
-                <Burger
-                  opened={mobileOpened}
-                  onClick={toggleMobile}
-                  hiddenFrom="sm"
-                  size="sm"
-                  aria-label="Toggle navigation panel open/close"
-                />
-                <Burger
-                  opened={desktopOpened}
-                  onClick={toggleDesktop}
-                  visibleFrom="sm"
-                  size="sm"
-                  aria-label="Toggle navigation panel open/close"
-                />
-              </Group>
-              <AppShell.Navbar p="md">
-                {displayText?.nav.map((item) => {
-                  return (
-                    <NavLink
-                      key={item.text}
-                      className={({ isActive, isPending }) =>
-                        isPending
-                          ? 'navLink pending'
-                          : isActive
-                          ? 'navLink active'
-                          : 'navLink'
-                      }
-                      to={item.url}
-                    >
-                      {item.text}
-                    </NavLink>
-                  )
-                })}
-              </AppShell.Navbar>
+              <Navigation user={user} />
             </AppShell.Header>
             <AppShell.Main>
               <Breadcrumbs separator="⟩">
@@ -230,7 +173,7 @@ export default function App() {
               </Container>
             </AppShell.Main>
           </AppShell>
-
+          <Footer />
           <ScrollRestoration />
           <Scripts />
           <LiveReload />
@@ -238,7 +181,7 @@ export default function App() {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Open+Sans&family=Roboto:wght@500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Lato:ital,wght@0,400;0,700;1,400&family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap"
           rel="stylesheet"
         ></link>
       </body>
@@ -292,13 +235,13 @@ export function ErrorBoundary() {
               </pre>
             </Card>
           </Container>
-
+          <Footer />
           <Scripts />
         </MantineProvider>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Open+Sans&family=Roboto:wght@500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap&family=Roboto:wght@500&display=swap"
           rel="stylesheet"
         ></link>
       </body>
