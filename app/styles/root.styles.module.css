@@ -1,16 +1,4 @@
-.title {
-  text-decoration: none;
-}
 
-.logoLink:active,
-.logoLink {
-  text-decoration: none;
-}
-
-.logoLink:hover {
-  text-decoration: underline;
-  text-decoration-color: var(--mantine-color-ytRed-9);
-}
 
 .breadcrumbLink {
   color: var(--mantine-color-text);
@@ -19,21 +7,9 @@
 }
 
 :global {
-  .navLink {
-    font-weight: 600;
-    font-size: 18px;
-    text-decoration: none;
-    color: var(--mantine-color-text);
-   }
-  .navLink.mobile {
-    margin-bottom: var(--mantine-spacing-xs);
-  }
-  .navLink:hover {
-    text-decoration: underline;
-  }
-  .navLink.active {
-    text-decoration: underline;
-    color: var(--mantine-color-ytRed-text);
+  * {
+    transition: color .4s ease-in-out;
+    transition: background-color .4s ease-in-out;
   }
 }
 

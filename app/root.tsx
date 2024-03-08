@@ -9,7 +9,6 @@ import {
   Title,
 } from '@mantine/core'
 import '@mantine/core/styles.css'
-import { useDisclosure } from '@mantine/hooks'
 import { cssBundleHref } from '@remix-run/css-bundle'
 import {
   LoaderFunctionArgs,
@@ -39,6 +38,7 @@ import { authenticator } from '~/models/auth/auth.server'
 import classes from '~/styles/root.styles.module.css'
 import * as gtag from '~/utils/gtags.client'
 import { theme } from '~/utils/theme'
+import Footer from './components/molecules/Footer'
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref
@@ -110,22 +110,8 @@ export const handle = {
 export default function App() {
   const location = useLocation()
   const matches = useMatches()
-  const [mobileOpened, { toggle: toggleMobile }] = useDisclosure()
   const { ga, user }: { ga: string; user: user | null } =
     useLoaderData<typeof loader>()
-  console.log(user)
-  const displayText = {
-    nav: [
-      {
-        text: 'Videos',
-        url: '/videos',
-      },
-      {
-        text: 'Playlists',
-        url: '/playlist',
-      },
-    ],
-  }
 
   useEffect(() => {
     if (ga.length) {
@@ -165,11 +151,6 @@ export default function App() {
             transitionDuration={350}
             transitionTimingFunction="ease"
             padding="md"
-            navbar={{
-              width: 120,
-              breakpoint: 'sm',
-              collapsed: { mobile: !mobileOpened },
-            }}
           >
             <AppShell.Header>
               <Navigation user={user} />
@@ -192,7 +173,7 @@ export default function App() {
               </Container>
             </AppShell.Main>
           </AppShell>
-
+          <Footer />
           <ScrollRestoration />
           <Scripts />
           <LiveReload />
@@ -200,7 +181,7 @@ export default function App() {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Open+Sans&family=Roboto:wght@500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Lato:ital,wght@0,400;0,700;1,400&family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap"
           rel="stylesheet"
         ></link>
       </body>
@@ -254,7 +235,7 @@ export function ErrorBoundary() {
               </pre>
             </Card>
           </Container>
-
+          <Footer />
           <Scripts />
         </MantineProvider>
         <link rel="preconnect" href="https://fonts.googleapis.com" />

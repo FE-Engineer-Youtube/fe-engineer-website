@@ -6,10 +6,9 @@ import {
   Flex,
   Group,
   Text,
-  Title,
   useMantineTheme,
 } from '@mantine/core'
-import { useDisclosure, useMediaQuery, useViewportSize } from '@mantine/hooks'
+import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import { Form, Link, NavLink, useLocation } from '@remix-run/react'
 import { useEffect } from 'react'
 import type { user } from '~/models/auth/auth.server'
@@ -29,13 +28,10 @@ const Navigation = ({ user }: { user: user }) => {
     ],
   }
 
-  const { width } = useViewportSize()
   const theme = useMantineTheme()
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
   const [opened, { open, close }] = useDisclosure()
   const location = useLocation()
-
-  console.log(mobile)
 
   useEffect(() => {
     if (opened) {
@@ -73,7 +69,7 @@ const Navigation = ({ user }: { user: user }) => {
             action="/api/google"
             method="POST"
           >
-            <Button type="submit" variant="light">
+            <Button type="submit" variant="outline" color="ytRed">
               Login
             </Button>
           </Form>
@@ -92,11 +88,14 @@ const Navigation = ({ user }: { user: user }) => {
               className={classes.loginForm}
               action="/api/logout"
               method="POST"
+              aria-label={'Logout'}
             >
               <Button
+                size="md"
+                pl={0}
                 type="submit"
                 variant="transparent"
-                color="var(--mantine-color-ytRed-6)"
+                color="text"
               >
                 Logout
               </Button>
@@ -109,34 +108,33 @@ const Navigation = ({ user }: { user: user }) => {
 
   return (
     <>
-      <Group h="100%" w="100%" px="md" justify="space-between">
-        <Link className={classes.logoLink} to="/">
-          <Title className={classes.title} order={3}>
+      <nav>
+        <Group h="100%" w="100%" px="md" justify="space-between">
+          <Link className={classes.logoLink} to="/">
             <Text
-              inherit
               variant="gradient"
-              component="span"
+              fw="600"
+              size="24px"
               gradient={{ from: 'ytRed', to: 'blue' }}
             >
               FE-Engineer.com
             </Text>
-          </Title>
-        </Link>
-
-        {!mobile && menuLinks()}
-        {mobile && (
-          <>
-            <Burger
-              opened={opened}
-              onClick={open}
-              aria-label="Toggle navigation"
-            />
-            <Drawer opened={opened} onClose={close} title="Navigation Menu">
-              {menuLinks()}
-            </Drawer>
-          </>
-        )}
-      </Group>
+          </Link>
+          {!mobile && menuLinks()}
+          {mobile && (
+            <>
+              <Burger
+                opened={opened}
+                onClick={open}
+                aria-label="Toggle navigation"
+              />
+              <Drawer opened={opened} onClose={close} title="Navigation Menu">
+                {menuLinks()}
+              </Drawer>
+            </>
+          )}
+        </Group>
+      </nav>
     </>
   )
 }

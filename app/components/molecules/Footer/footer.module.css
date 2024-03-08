@@ -1,0 +1,10 @@
+footer .socialIcon svg {
+  color: var(--mantine-color-dimmed);
+  stroke: var(--mantine-color-dimmed);
+  transition: all .4s ease-in-out;
+}
+
+footer .socialIcon:hover svg {
+  color: var(--mantine-color-text);
+  stroke: var(--mantine-color-text);
+}
