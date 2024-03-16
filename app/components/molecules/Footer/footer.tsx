@@ -58,6 +58,7 @@ const Footer = () => {
           <Text
             c="dimmed"
             size="sm"
+            mt="md"
             ta="center"
           >{`© ${new Date().getFullYear()} FE-Engineer All Rights Reserved.`}</Text>
         </Container>
