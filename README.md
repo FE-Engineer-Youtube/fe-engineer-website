@@ -43,8 +43,10 @@ pnpm start-cluster
 
 To use this code, you will need a youtube API key, a firebase project all setup with the required firebase credentials.  You can see the env.sample file to see the required variables to run this exactly as it works at [FE-Engineer Website](https://fe-engineer.com).
 
-## Mantine Remix template
+## Helpful Links
 
-Get started with the template by clicking `Use this template` button on the top of the page.
-
-[Documentation](https://mantine.dev/guides/remix/)
+Framework - [Remix](https://remix.run/)
+Component Library - [Mantine Documentation](https://mantine.dev/guides/remix/)
+Youtube API Key - [Google Cloud Console](https://console.cloud.google.com/)
+Authentication - [Google Firebase](https://console.firebase.google.com/)
+Analytics - [Google Analytics](https://analytics.google.com/)
