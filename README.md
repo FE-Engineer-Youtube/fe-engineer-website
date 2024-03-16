@@ -46,7 +46,11 @@ To use this code, you will need a youtube API key, a firebase project all setup 
 ## Helpful Links
 
 Framework - [Remix](https://remix.run/)
+
 Component Library - [Mantine Documentation](https://mantine.dev/guides/remix/)
+
 Youtube API Key - [Google Cloud Console](https://console.cloud.google.com/)
+
 Authentication - [Google Firebase](https://console.firebase.google.com/)
+
 Analytics - [Google Analytics](https://analytics.google.com/)
