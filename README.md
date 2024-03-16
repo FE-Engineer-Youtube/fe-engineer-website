@@ -1,6 +1,6 @@
 # FE-Engineer Website
 
-This is an open-source code base used to power the website for FE-Engineer on youtube.  https://fe-engineer.com(https://fe-engineer.com).  This code is provided as-is, and there is no guarantees that it will be updated or maintained.
+This is an open-source code base used to power the website for FE-Engineer on youtube.  [Visit FE-Engineer Website here](https://fe-engineer.com).  This code is provided as-is, and there is no guarantees that it will be updated or maintained.
 
 ## What does it do?
 
@@ -39,9 +39,11 @@ Deploy using PM2
 pnpm start-cluster
 ```
 
+## What is needed to use this as it is?
 
+To use this code, you will need a youtube API key, a firebase project all setup with the required firebase credentials.  You can see the env.sample file to see the required variables to run this exactly as it works at [FE-Engineer Website](https://fe-engineer.com).
 
-# Mantine Remix template
+## Mantine Remix template
 
 Get started with the template by clicking `Use this template` button on the top of the page.
 
