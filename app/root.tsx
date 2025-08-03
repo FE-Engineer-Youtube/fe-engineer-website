@@ -156,19 +156,19 @@ export default function App() {
               <Navigation user={user} />
             </AppShell.Header>
             <AppShell.Main>
-              <Breadcrumbs separator="⟩">
-                {matches
-                  .filter(
-                    (match: any) => match.handle && match.handle?.breadcrumb
-                  )
-                  .map((match: any, index) => (
-                    <React.Fragment key={index}>
-                      {match.handle.breadcrumb(match)}
-                    </React.Fragment>
-                  ))}
-              </Breadcrumbs>
-
               <Container size={1280}>
+                <Breadcrumbs separator="⟩" mb="xl">
+                  {matches
+                    .filter(
+                      (match: any) => match.handle && match.handle?.breadcrumb
+                    )
+                    .map((match: any, index) => (
+                      <React.Fragment key={index}>
+                        {match.handle.breadcrumb(match)}
+                      </React.Fragment>
+                    ))}
+                </Breadcrumbs>
+
                 <Outlet />
               </Container>
             </AppShell.Main>

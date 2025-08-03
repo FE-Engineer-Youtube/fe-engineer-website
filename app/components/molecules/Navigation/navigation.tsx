@@ -109,7 +109,7 @@ const Navigation = ({ user }: { user: user }) => {
   return (
     <>
       <nav>
-        <Group h="100%" w="100%" px="md" justify="space-between">
+        <Group h="60px" px="xl" justify="space-between">
           <Link className={classes.logoLink} to="/">
             <Text
               variant="gradient"
