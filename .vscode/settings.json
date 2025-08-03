@@ -1,5 +1,5 @@
 {
-  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.fontSize": 16,
   "editor.tabSize": 2,
   "editor.codeActionsOnSave": {
@@ -10,5 +10,7 @@
   "vs-code-prettier-eslint.prettierLast": true,
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "typescript.tsdk": "/home/jon/github/fe-engineer-website/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

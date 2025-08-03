@@ -47,7 +47,7 @@ const Footer = () => {
               </Anchor>
               <Anchor
                 className={classes.socialIcon}
-                href="//discord.gg/6E78QF2e"
+                href="//discord.gg/7Y7y7kYvdQ"
                 target="_blank"
                 aria-label={'FE-Engineer Discord - Link opens in new tab'}
               >
@@ -58,6 +58,7 @@ const Footer = () => {
           <Text
             c="dimmed"
             size="sm"
+            mt="md"
             ta="center"
           >{`© ${new Date().getFullYear()} FE-Engineer All Rights Reserved.`}</Text>
         </Container>
