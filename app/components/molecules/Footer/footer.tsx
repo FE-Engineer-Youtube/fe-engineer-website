@@ -10,6 +10,9 @@ import { useMediaQuery } from '@mantine/hooks'
 import { IconBrandDiscord, IconBrandYoutube } from '@tabler/icons-react'
 import classes from './footer.module.css'
 
+const COMINGUP_URL = 'https://www.comingup.today/'
+const COMINGUP_ICON_URL = 'https://www.comingup.today/brand/icon.svg'
+
 const Footer = () => {
   const displayText = {
     nav: [
@@ -52,6 +55,22 @@ const Footer = () => {
                 aria-label={'FE-Engineer Discord - Link opens in new tab'}
               >
                 <IconBrandDiscord />
+              </Anchor>
+              <Anchor
+                className={classes.socialIcon}
+                href={COMINGUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={'ComingUp Today - Link opens in new tab'}
+              >
+                <img
+                  className={classes.socialLogo}
+                  src={COMINGUP_ICON_URL}
+                  alt="ComingUp Today"
+                  width={22}
+                  height={22}
+                  loading="lazy"
+                />
               </Anchor>
             </Group>
           </Group>
