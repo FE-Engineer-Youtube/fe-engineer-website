@@ -43,6 +43,7 @@ export const meta: MetaFunction = ({ data }: any) => {
         '@type': ['VideoObject', 'LearningResource'],
         '@id': `https://fe-engineer.com/videos/${data?.videoData?.items?.[0]?.id}#video`,
         name: title,
+        creator: { '@id': 'https://fe-engineer.com/#person' },
 
         // Strongly recommended: page URL where the video is described
         url: `https://fe-engineer.com/videos/${data?.videoData?.items?.[0]?.id}`,
@@ -66,6 +67,10 @@ export const meta: MetaFunction = ({ data }: any) => {
         duration: contentDetails?.duration,
         learningResourceType: 'Problem walkthrough',
         isPartOf: { '@id': 'https://fe-engineer.com/#website' },
+        mainEntityOfPage: {
+          '@id': `https://fe-engineer.com/videos/${data?.videoData?.items?.[0]?.id}#webpage`,
+        },
+
         potentialAction: {
           '@type': 'WatchAction',
           target: `https://www.youtube.com/watch?v=${data?.videoData?.items?.[0]?.id}`,
