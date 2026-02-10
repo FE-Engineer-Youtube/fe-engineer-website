@@ -71,35 +71,43 @@ export const headers: HeadersFunction = () => ({
 })
 
 export const meta: MetaFunction = () => {
+  const description =
+    'Practical software engineering, homelab infrastructure, local AI workflows, and real-world build guides from FE-Engineer.'
+
   return [
     { title: SITE_NAME },
-    {
-      name: 'description',
-      content:
-        'Practical software engineering, homelab infrastructure, local AI workflows, and real-world build guides from FE-Engineer.',
-    },
-    { name: 'author', content: SITE_NAME },
-    { property: 'og:title', content: SITE_NAME },
-    {
-      property: 'og:description',
-      content:
-        'Practical software engineering, homelab infrastructure, local AI workflows, and real-world build guides from FE-Engineer.',
-    },
+    { name: 'description', content: description },
+
+    // Optional but recommended canonicalization helpers
+    // If you have a known origin constant, use that.
+    { property: 'og:url', content: 'https://fe-engineer.com/' },
     { property: 'og:site_name', content: SITE_NAME },
+
+    // Author meta is okay, but not a standard SEO signal.
+    { name: 'author', content: SITE_NAME },
+
+    { property: 'og:title', content: SITE_NAME },
+    { property: 'og:description', content: description },
     { property: 'og:type', content: 'website' },
     { property: 'og:locale', content: 'en_US' },
+
+    // Use a stable absolute URL here
     { property: 'og:image', content: DEFAULT_SOCIAL_IMAGE },
-    { property: 'og:image:alt', content: 'FE-Engineer profile image' },
+
+    // Make alt match what the image actually is (usually an OG banner)
+    { property: 'og:image:alt', content: `${SITE_NAME} — Practical engineering and homelab builds` },
+
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: SITE_NAME },
-    {
-      name: 'twitter:description',
-      content:
-        'Practical software engineering, homelab infrastructure, local AI workflows, and real-world build guides from FE-Engineer.',
-    },
+    { name: 'twitter:description', content: description },
     { name: 'twitter:image', content: DEFAULT_SOCIAL_IMAGE },
+
+    // Optional canonical tag if your framework supports it via MetaFunction
+    // Some setups use { rel: 'canonical', href: '...' } instead—depends on your meta handling.
+    // { tagName: 'link', rel: 'canonical', href: 'https://fe-engineer.com/' },
   ]
 }
+
 
 export const loader: LoaderFunction = async ({
   request,
@@ -206,53 +214,85 @@ export default function App() {
         }
       : null
 
-  const personId = `${origin}/#person`
-  const websiteId = `${origin}/#website`
-  const websiteSchema = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'Person',
-        '@id': personId,
-        name: SITE_NAME,
-        url: `${origin}/about`,
-        image: DEFAULT_SOCIAL_IMAGE,
-        sameAs: [YOUTUBE_CHANNEL_URL, COMING_UP_URL, GITHUB_PROFILE_URL],
-        jobTitle: 'Software Engineer',
-        knowsAbout: [
-          'Software engineering',
-          'Homelab infrastructure',
-          'Local AI',
-          'AMD ROCm',
-          'Automation',
-          'Web development',
+      const personId = `${origin}/#person`
+      const websiteId = `${origin}/#website`
+      
+      // ComingUp Today entities (modeled, but NOT in sameAs)
+      const comingUpWebsiteId = `${COMING_UP_URL}#website`
+      const comingUpAppId = `${COMING_UP_URL}#app`
+      
+      const websiteSchema = {
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'Person',
+            '@id': personId,
+            name: SITE_NAME,
+            url: `${origin}/about`,
+            image: DEFAULT_SOCIAL_IMAGE,
+      
+            // sameAs should be identity profiles, not a product site
+            sameAs: [YOUTUBE_CHANNEL_URL, GITHUB_PROFILE_URL],
+      
+            jobTitle: 'Software Engineer',
+            knowsAbout: [
+              'Software engineering',
+              'Homelab infrastructure',
+              'Local AI',
+              'AMD ROCm',
+              'Automation',
+              'Web development',
+            ],
+      
+            // Safer than owns; indicates the person is the subject/creator of this thing
+            subjectOf: [{ '@id': comingUpWebsiteId }, { '@id': comingUpAppId }],
+          },
+      
+          {
+            '@type': 'WebSite',
+            '@id': websiteId,
+            name: SITE_NAME,
+            url: origin,
+            description:
+              'Practical software engineering, homelab infrastructure, local AI workflows, and real-world build guides.',
+            inLanguage: 'en',
+            author: { '@id': personId },
+            creator: { '@id': personId },
+          },
+      
+          {
+            '@type': 'WebPage',
+            '@id': `${canonicalUrl}#webpage`,
+            url: canonicalUrl,
+            name: SITE_NAME,
+            description:
+              'Practical software engineering, homelab infrastructure, local AI workflows, and real-world build guides.',
+            isPartOf: { '@id': websiteId },
+            author: { '@id': personId },
+      
+            // Homepage isn't "about" the person; avoid about -> person here
+            // about: { '@id': personId },
+          },
+      
+          // ComingUp Today modeled explicitly (helps relationship clarity)
+          {
+            '@type': 'WebSite',
+            '@id': comingUpWebsiteId,
+            name: 'ComingUp Today',
+            url: COMING_UP_URL,
+          },
+          {
+            '@type': 'SoftwareApplication',
+            '@id': comingUpAppId,
+            name: 'ComingUp Today',
+            applicationCategory: 'ProductivityApplication',
+            operatingSystem: 'Web',
+            url: COMING_UP_URL,
+            creator: { '@id': personId },
+          },
         ],
-        owns: {
-          '@type': 'WebSite',
-          name: 'ComingUp Today',
-          url: COMING_UP_URL,
-        },
-      },
-      {
-        '@type': 'WebSite',
-        '@id': websiteId,
-        name: SITE_NAME,
-        url: origin,
-        description:
-          'Practical software engineering, homelab infrastructure, local AI workflows, and real-world build guides.',
-        author: { '@id': personId },
-        creator: { '@id': personId },
-      },
-      {
-        '@type': 'WebPage',
-        '@id': `${canonicalUrl}#webpage`,
-        url: canonicalUrl,
-        isPartOf: { '@id': websiteId },
-        author: { '@id': personId },
-        about: { '@id': personId },
-      },
-    ],
-  }
+      }
+      
 
   useEffect(() => {
     if (ga.length) {
