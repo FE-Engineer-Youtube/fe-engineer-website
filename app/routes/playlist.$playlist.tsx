@@ -1,12 +1,11 @@
 import { Group, Text, Title } from '@mantine/core'
 import {
-  json,
   redirect,
   type LoaderFunction,
   type LoaderFunctionArgs,
   type MetaFunction,
-} from '@remix-run/node'
-import { Link, useLoaderData, useMatches } from '@remix-run/react'
+} from 'react-router'
+import { Link, useLoaderData, useMatches } from 'react-router'
 import PlayListItemCard from '~/components/atoms/PlayListItemCard'
 import Splash from '~/components/organisms/splash'
 import { getPlayListItems } from '~/models/fetchYT.server'
@@ -57,7 +56,7 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
     cache.set(`playlist-${playListId}`, playListItemsData, 60 * 30)
   }
 
-  return json(
+  return Response.json(
     { playListItemsData },
     {
       headers: {
@@ -71,8 +70,12 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
 
 export const handle = {
   breadcrumb: (data: any) => {
+    const playlistId = data?.params?.playlist
     return (
-      <Link className={classes.breadcrumbLink} to="/">
+      <Link
+        className={classes.breadcrumbLink}
+        to={playlistId ? `/playlist/${playlistId}` : '/playlist'}
+      >
         {`${
           data?.data?.playListItemsData?.items[
             findIndex(

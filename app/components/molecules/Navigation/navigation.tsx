@@ -9,7 +9,7 @@ import {
   useMantineTheme,
 } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
-import { Form, Link, NavLink, useLocation } from '@remix-run/react'
+import { Form, Link, NavLink, useLocation } from 'react-router'
 import { useEffect } from 'react'
 import type { user } from '~/models/auth/auth.server'
 import classes from './navigation.module.css'
@@ -17,6 +17,10 @@ import classes from './navigation.module.css'
 const Navigation = ({ user }: { user: user }) => {
   const displayText = {
     nav: [
+      {
+        text: 'About',
+        url: '/about',
+      },
       {
         text: 'Videos',
         url: '/videos',

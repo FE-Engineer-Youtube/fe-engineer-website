@@ -1,6 +1,6 @@
-import type { LoaderFunction, MetaFunction } from '@remix-run/node'
-import { json, redirect } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
+import type { LoaderFunction, MetaFunction } from 'react-router'
+import { redirect } from 'react-router'
+import { Link, useLoaderData } from 'react-router'
 import LargeVideoPlayer from '~/components/atoms/LargeVideoPlayer'
 import Splash from '~/components/organisms/splash'
 import { getVideo } from '~/models/fetchYT.server'
@@ -72,8 +72,11 @@ export const meta: MetaFunction = ({ data }: any) => {
 }
 
 export const handle = {
-  breadcrumb: ({ data }: any) => (
-    <Link className={classes.breadcrumbLink} to={`/videos/${'videoid'}`}>
+  breadcrumb: ({ data, params }: any) => (
+    <Link
+      className={classes.breadcrumbLink}
+      to={`/videos/${params?.video || 'videoid'}`}
+    >
       {data?.videoData?.items[0]?.snippet?.title}
     </Link>
   ),
@@ -97,7 +100,7 @@ export const loader: LoaderFunction = async (args: any) => {
     cache.set(`video-${args?.params?.video}`, videoData, 60 * 60 * 8)
   }
 
-  return json(
+  return Response.json(
     { videoData },
     {
       headers: {

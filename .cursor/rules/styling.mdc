@@ -1,0 +1,29 @@
+---
+description: CSS modules and Mantine styling conventions
+globs: app/**/*.{css,tsx}
+alwaysApply: false
+---
+
+# Styling
+
+## CSS Modules
+
+- **Always use `.module.css`** — Colocate with components: `ComponentName.module.css`
+- Import as: `import classes from './ComponentName.module.css'`
+- Apply via: `className={classes.className}`
+
+## Shared Styles
+
+- `app/styles/root.styles.module.css` — Global styles, breadcrumb links, body
+- Use `:global` sparingly for global overrides
+
+## Mantine Integration
+
+- Use Mantine layout props (`mt`, `mb`, `p`, `gap`, etc.) where possible
+- Use CSS modules for component-specific overrides (heights, widths, layout tweaks)
+- Reference Mantine vars: `var(--mantine-color-dimmed)`, `var(--mantine-h2-font-size)`, etc.
+
+## Naming
+
+- Class names: camelCase in modules (e.g. `videocard`, `breadcrumbLink`)
+- Some modules use lowercase (e.g. `footer.module.css`, `navigation.module.css`) — prefer consistency with `ComponentName.module.css` when creating new files

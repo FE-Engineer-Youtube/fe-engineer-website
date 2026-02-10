@@ -1,0 +1,44 @@
+---
+description: Reusable utilities and where to find or add them
+globs: app/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Utilities and Reusable Functions
+
+## Before Adding New Logic
+
+**Check `app/utils/` first.** Do not duplicate existing utilities.
+
+## Existing Utilities
+
+### `app/utils/utils.ts`
+
+- `sixteenByNine(width)` — 16:9 aspect ratio height
+- `createSrcSet(thumbnails)` — Responsive image srcSet for YouTube thumbnails
+- `findIndex(data, idStr, key?, searchSnippet?)` — Array index by id or nested key
+- `truncate(str, length)` — Truncate string with ellipsis
+- `truncateTitleLength(str)` — Title length for SEO (70 - str.length)
+
+### `app/utils/countUp.ts`
+
+- `useCountUp(end, durationMs)` — Hook that returns a number animating from 0 to end over duration (ms). Use with `<CountUp>` atom for formatted display.
+
+### `app/utils/theme.ts`
+
+- `theme` — Mantine theme (ytRed, fonts). Customize via this file.
+
+### `app/utils/gtags.client.ts`
+
+- `pageview(url, trackingId)` — GA page view
+- `gaEvent({ name, category, label, value })` — GA event tracking
+
+### `app/utils/db.server.ts`
+
+- `cache` — NodeCache instance for server-side caching
+
+## Conventions
+
+- **Server-only:** `*.server.ts` (e.g. `db.server.ts`). Use for Node APIs, cache, etc.
+- **Client-only:** `*.client.ts` (e.g. `gtags.client.ts`). Use for `window`, browser APIs.
+- **Shared:** `utils.ts`, `theme.ts` — safe for both server and client where applicable.

@@ -1,0 +1,25 @@
+---
+description: Data fetching, models, and server-side patterns
+globs: app/models/**/*.ts
+alwaysApply: false
+---
+
+# Data Fetching and Models
+
+## Model Location
+
+- `app/models/` — All data-fetching and server-side logic
+- `app/models/fetchYT.server.ts` — YouTube API (`getHPVideos`, `getAllVideos`, `getPlayLists`, `getPlayListItems`, `getVideo`, `getChannelDetails`)
+- `app/models/auth/` — Auth logic (`auth.server`, `session.server`, `firebase`)
+
+## Caching
+
+- Use `cache` from `~/utils/db.server` in loaders
+- Pattern: `if (cache.has(key)) { data = await cache.get(key) } else { data = await fetch(); cache.set(key, data, ttl) }`
+- TTL in seconds (e.g. `60 * 60` for 1 hour)
+
+## Conventions
+
+- Server-only modules use `*.server.ts` suffix
+- Export async functions; handle errors and return `null` on failure
+- Models are called from route loaders, not from components directly
