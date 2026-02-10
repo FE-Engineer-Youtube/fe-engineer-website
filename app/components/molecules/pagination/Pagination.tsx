@@ -1,5 +1,5 @@
 import { Button, Group } from '@mantine/core'
-import { Link } from '@remix-run/react'
+import { Link } from 'react-router'
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 
 const Pagination = ({ page, prev, next }: any) => {

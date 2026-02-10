@@ -2,7 +2,7 @@ import { Badge, Button, Card, Group, Text, Title } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
 import { decode } from 'html-entities'
 import { useEffect, useState } from 'react'
-import { CountUp } from 'use-count-up'
+import { CountUp } from '~/components/atoms/CountUp'
 import { gaEvent } from '~/utils/gtags.client'
 import { sixteenByNine } from '~/utils/utils'
 import classes from './LargeVideoPlayer.module.css'
@@ -65,7 +65,6 @@ const LargeVideoPlayer = ({ data }: any) => {
           <Text>
             {displayText.views}
             <CountUp
-              isCounting
               end={+data?.items[0].statistics?.viewCount || 9999}
               duration={3}
               formatter={(value) =>
@@ -78,7 +77,6 @@ const LargeVideoPlayer = ({ data }: any) => {
           <Text>
             {displayText.likes}
             <CountUp
-              isCounting
               end={+data?.items[0].statistics?.likeCount || 99}
               duration={3}
               formatter={(value) =>

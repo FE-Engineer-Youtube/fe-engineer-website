@@ -8,7 +8,7 @@ import {
   useMantineTheme,
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import { CountUp } from 'use-count-up'
+import { CountUp } from '~/components/atoms/CountUp'
 import { gaEvent } from '~/utils/gtags.client'
 import classes from './Hpabout.module.css'
 
@@ -63,7 +63,6 @@ const Hpabout = ({ channelData }: any) => {
                   </Title>
                   <Text ta="center" size="xl" c="text">
                     <CountUp
-                      isCounting
                       end={+channelData?.items[0]?.statistics[item] || 9999}
                       duration={3}
                       formatter={(value) =>

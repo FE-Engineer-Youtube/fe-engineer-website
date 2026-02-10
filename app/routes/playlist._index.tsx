@@ -1,6 +1,6 @@
 import { Group, Text, Title } from '@mantine/core'
-import type { LoaderFunction, MetaFunction } from '@remix-run/node'
-import { useMatches } from '@remix-run/react'
+import type { LoaderFunction, MetaFunction } from 'react-router'
+import { useMatches } from 'react-router'
 import PlayListCard from '~/components/atoms/PlayListCard'
 import Splash from '~/components/organisms/splash'
 import { truncate } from '~/utils/utils'
