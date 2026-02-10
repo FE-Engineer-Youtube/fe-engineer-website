@@ -1,4 +1,4 @@
-import type { LoaderFunction } from '@remix-run/node'
+import type { LoaderFunction } from 'react-router'
 
 export const loader: LoaderFunction = async () => {
   throw new Response('404 Not Found', { status: 404 })

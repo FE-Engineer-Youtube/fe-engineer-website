@@ -1,5 +1,5 @@
 import { Card, Text, Title } from '@mantine/core'
-import type { LoaderFunction, MetaFunction } from '@remix-run/node'
+import type { LoaderFunction, MetaFunction } from 'react-router'
 import { truncate } from '~/utils/utils'
 
 export const meta: MetaFunction = (data: any) => {

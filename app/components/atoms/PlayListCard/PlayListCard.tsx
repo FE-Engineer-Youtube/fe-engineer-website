@@ -1,6 +1,6 @@
 import { Button, Card, Text, Title } from '@mantine/core'
 import { useResizeObserver } from '@mantine/hooks'
-import { Link } from '@remix-run/react'
+import { Link } from 'react-router'
 import { decode } from 'html-entities'
 import { gaEvent } from '~/utils/gtags.client'
 import { createSrcSet, sixteenByNine } from '~/utils/utils'

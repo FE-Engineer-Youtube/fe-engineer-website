@@ -1,0 +1,46 @@
+---
+description: Component patterns, atomic design, and Mantine usage
+globs: app/components/**/*.tsx
+alwaysApply: false
+---
+
+# Component Patterns
+
+## Before Creating New Components
+
+**Search existing components first.** Reuse or extend:
+
+- **Atoms:** `VideoPlayer`, `LargeVideoPlayer`, `PlayListCard`, `PlayListItemCard`, `ColorSchemeToggle`, `CountUp`, `Welcome`
+- **Molecules:** `Navigation`, `Footer`, `HpAbout`, `Pagination`
+- **Organisms:** `Splash`
+
+## Atomic Design
+
+- **atoms/** — Smallest units (buttons, cards, single-purpose UI)
+- **molecules/** — Composed atoms (Footer, Navigation, Pagination)
+- **organisms/** — Complex sections (Splash, page-level compositions)
+
+## Component Folder Structure
+
+Each component lives in its own folder:
+
+```
+ComponentName/
+  index.ts          # re-exports default + named exports
+  ComponentName.tsx
+  ComponentName.module.css
+```
+
+## Mantine Usage
+
+- Use `@mantine/core` components: `Card`, `Button`, `Text`, `Title`, `Group`, `Stack`, `Flex`, `Container`, etc.
+- Use `@mantine/hooks`: `useResizeObserver`, `useMediaQuery`, `useDisclosure`, `useElementSize`, `usePagination`
+- Use `@tabler/icons-react` for icons
+- Theme color `ytRed` for primary actions
+- Use `decode` from `html-entities` for user-generated text (e.g. YouTube titles)
+
+## Patterns
+
+- Use a `displayText` object for all user-facing strings (accessibility, consistency)
+- Use `gaEvent` from `~/utils/gtags.client` for analytics on external links/buttons
+- Import and use utils from `~/utils/utils` (e.g. `sixteenByNine`, `createSrcSet`, `truncate`, `findIndex`)

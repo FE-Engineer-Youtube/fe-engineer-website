@@ -1,4 +1,4 @@
-import type { LoaderFunction } from '@remix-run/node'
+import type { LoaderFunction } from 'react-router'
 import { getPlayLists, getRecentVideos } from '~/models/fetchYT.server'
 import { cache } from '~/utils/db.server'
 

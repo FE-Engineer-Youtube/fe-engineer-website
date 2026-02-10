@@ -1,0 +1,34 @@
+---
+description: Route structure and loader/action patterns (React Router v7)
+globs: app/routes/**/*.tsx
+alwaysApply: false
+---
+
+# Routes and Data Loading
+
+This project uses **React Router v7**. Use route modules, loaders, and actions. Import from `react-router` and `@react-router/node` as needed.
+
+## Route File Conventions
+
+- Layout routes: `videos.tsx`, `playlist.tsx`, `user.tsx` — export `Outlet`, `loader`, `handle.breadcrumb`
+- Index routes: `_index.tsx`, `videos._index.tsx`, `playlist._index.tsx`
+- Dynamic: `videos.$video.tsx`, `playlist.$playlist.tsx`, `user.$userId.tsx`
+- Special: `$.tsx` (404), `[robots.txt].tsx`, `[sitemap.xml].tsx`
+- API routes: `api.*.tsx`
+
+## Loader Patterns
+
+- Use `loader` for data fetching; return `json()` with optional headers
+- Use `cache` from `~/utils/db.server` for server-side caching
+- Models live in `app/models/` (e.g. `fetchYT.server`, `auth/`)
+
+## handle.breadcrumb
+
+- Export `handle: { breadcrumb: () => <Link ...> }` for layout routes
+- Use `classes.breadcrumbLink` from `~/styles/root.styles.module.css`
+- Breadcrumbs are rendered in `root.tsx` from `useMatches()`
+
+## Meta
+
+- Export `meta` for SEO (title, description, keywords)
+- Use `truncate` from `~/utils/utils` for meta descriptions (max 157 chars)

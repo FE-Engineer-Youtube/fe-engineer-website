@@ -2,7 +2,7 @@ module.exports = {
   apps : [{
     name: 'fe-cluster',
     script: 'pnpm',
-    args: 'remix-serve ./build/index.js',
+    args: 'react-router-serve ./build/server/index.js',
     instances: 4,
     port: 3002,
     max_memory_restart: "500M",

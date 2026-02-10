@@ -1,0 +1,23 @@
+.featureCardWrap {
+  display: block;
+  height: 100%;
+  text-align: left;
+}
+
+.featureCard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.featureCard:hover {
+  box-shadow: var(--mantine-shadow-md);
+  border-color: var(--mantine-color-default-border-hover);
+  cursor: pointer;
+}
+
+.featureCardDescription {
+  flex: 1;
+  min-height: 0;
+}

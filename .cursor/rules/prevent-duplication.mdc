@@ -1,0 +1,15 @@
+---
+description: Check before creating—avoid duplicate components and utilities
+alwaysApply: true
+---
+
+# Prevent Duplication
+
+Before creating new code:
+
+1. **Functions** — Search `app/utils/` (`utils.ts`, `theme.ts`, `gtags.client.ts`, `db.server.ts`). Reuse existing helpers.
+2. **Components** — Search `app/components/` (atoms, molecules, organisms). Extend or compose existing components rather than rebuilding.
+3. **Data fetching** — Check `app/models/` (`fetchYT.server.ts`, `auth/`). Add new fetchers there, not in routes.
+4. **Styles** — Use Mantine components and props first; add CSS modules only when needed. Reuse `root.styles.module.css` for shared patterns.
+
+When in doubt, search the codebase for similar functionality before implementing.

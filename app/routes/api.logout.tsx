@@ -3,7 +3,7 @@ import {
   type ActionFunction,
   type ActionFunctionArgs,
   type LoaderFunction,
-} from '@remix-run/node'
+} from 'react-router'
 import { authenticator } from '~/models/auth/auth.server'
 
 export const loader: LoaderFunction = () => {

@@ -4,10 +4,10 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev --manual",
+    "build": "react-router build",
+    "dev": "react-router dev",
     "start-cluster": "git pull && pnpm i && pnpm build && pm2 restart ecosystem.config.cjs --update-env",
-    "typecheck": "tsc"
+    "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
     "@mantine/carousel": "^7.3.2",
@@ -20,10 +20,9 @@
     "@mantine/modals": "^7.3.2",
     "@mantine/notifications": "^7.3.2",
     "@mantine/tiptap": "^7.3.2",
-    "@remix-run/css-bundle": "2.4.1",
-    "@remix-run/node": "2.4.1",
-    "@remix-run/react": "2.4.1",
-    "@remix-run/serve": "2.4.1",
+    "@react-router/node": "^7.13.0",
+    "@react-router/serve": "^7.13.0",
+    "react-router": "^7.13.0",
     "@tabler/icons-react": "2.44.0",
     "@tiptap/extension-link": "^2.1.13",
     "@tiptap/react": "^2.1.13",
@@ -39,22 +38,23 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remix-auth": "^3.6.0",
-    "remix-auth-google": "^2.0.0",
-    "use-count-up": "^3.0.1"
+    "remix-auth-google": "^2.0.0"
   },
   "devDependencies": {
-    "@remix-run/dev": "2.4.1",
-    "@remix-run/eslint-config": "2.4.1",
+    "@react-router/dev": "^7.13.0",
+    "@react-router/fs-routes": "^7.13.0",
     "@types/react": "^18.2.35",
     "@types/react-dom": "^18.2.14",
     "eslint": "^8.53.0",
     "postcss": "^8.4.32",
     "postcss-preset-mantine": "1.12.0",
     "postcss-simple-vars": "^7.0.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite": "^5.4.0",
+    "vite-tsconfig-paths": "^4.3.2"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
-  "packageManager": "pnpm"
+  "packageManager": "pnpm@9.14.2"
 }

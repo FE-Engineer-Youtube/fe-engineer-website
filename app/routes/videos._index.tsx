@@ -4,8 +4,8 @@ import type {
   LoaderFunction,
   LoaderFunctionArgs,
   MetaFunction,
-} from '@remix-run/node'
-import { json, useLoaderData, useMatches } from '@remix-run/react'
+} from 'react-router'
+import { useLoaderData, useMatches } from 'react-router'
 import PlayListItemCard from '~/components/atoms/PlayListItemCard'
 import Pagination from '~/components/molecules/pagination'
 import Splash from '~/components/organisms/splash'
@@ -44,7 +44,7 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
     videosData = await getAllVideos(results, pageToken)
     cache.set(`videos-${results}-${page}`, videosData, 60 * 60 * 8)
   }
-  return json(
+  return Response.json(
     { videosData, page },
     {
       headers: {

@@ -1,0 +1,23 @@
+---
+description: Core project architecture and principles
+alwaysApply: true
+---
+
+# FE-Engineer Architecture Overview
+
+This codebase uses **React Router v7** (formerly Remix).
+
+## Directory Structure
+
+- `app/components/` — Atomic design: `atoms/`, `molecules/`, `organisms/`
+- `app/utils/` — Reusable utilities (server: `*.server.ts`, client: `*.client.ts`)
+- `app/models/` — Data-fetching, auth, and server-side logic
+- `app/routes/` — Route modules (loaders, actions, meta)
+- `app/styles/` — Shared CSS modules (e.g. `root.styles.module.css`)
+
+## Principles
+
+1. **Mantine first** — Use `@mantine/core` and `@mantine/hooks` for UI; avoid custom alternatives.
+2. **Reuse before creating** — Check `app/utils/` and `app/components/` before adding new functions or components.
+3. **Separation of concerns** — Colocate component CSS in `.module.css` files; keep server logic in `*.server.ts`.
+4. **Clean, readable code** — Small, focused modules; clear naming; minimal duplication.
