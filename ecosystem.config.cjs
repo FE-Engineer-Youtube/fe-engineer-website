@@ -3,7 +3,7 @@ module.exports = {
     name: 'fe-cluster',
     script: 'pnpm',
     args: 'react-router-serve ./build/server/index.js',
-    instances: 4,
+    instances: 1,
     port: 3002,
     max_memory_restart: "500M",
     exec_mode: "cluster_mode",
