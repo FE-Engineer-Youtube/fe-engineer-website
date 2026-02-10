@@ -4,7 +4,25 @@ footer .socialIcon svg {
   transition: all .4s ease-in-out;
 }
 
+footer .socialIcon {
+  display: inline-flex;
+  align-items: center;
+}
+
+footer .socialIcon .socialLogo {
+  display: block;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  opacity: 0.75;
+  transition: opacity .4s ease-in-out;
+}
+
 footer .socialIcon:hover svg {
   color: var(--mantine-color-text);
   stroke: var(--mantine-color-text);
+}
+
+footer .socialIcon:hover .socialLogo {
+  opacity: 1;
 }
