@@ -36,7 +36,7 @@ export const loader: LoaderFunction = async () => {
   const playListPages = playListData?.items.map((playlist: any) => {
     return makeXML(
       `playlist/${playlist?.id}`,
-      0.9,
+      0.5,
       playlist?.snippet?.publishedAt
     )
   })
@@ -45,7 +45,7 @@ export const loader: LoaderFunction = async () => {
   const videosPages = recentvideos?.items.map((video: any) => {
     return makeXML(
       `videos/${video?.id?.videoId}`,
-      0.9,
+      0.6,
       video?.snippet?.publishedAt
     )
   })
@@ -53,9 +53,10 @@ export const loader: LoaderFunction = async () => {
   // The overall XML content to return, including dynamic data
   const content = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       ${makeXML('', 1)}
-      ${makeXML('playlist', 1)}
+      ${makeXML('about', 0.9)}
+      ${makeXML('playlist', 0.5)}
       ${playListPages.join('')}
-      ${makeXML('videos', 1)}
+      ${makeXML('videos', 0.5)}
       ${videosPages.join('')}
       </urlset>`
 
