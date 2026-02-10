@@ -13,21 +13,31 @@ import { getAllVideos } from '~/models/fetchYT.server'
 import { cache } from '~/utils/db.server'
 import { truncate } from '~/utils/utils'
 
+const TITLE = 'FE Engineer Youtube channel videos | FE-Engineer'
+const DESCRIPTION = `Youtube videos for FE-Engineer channel.  Videos cover a wide variety of topics including: AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, and more!`
+const KEYWORDS = `AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, FE Engineer Youtube, FE Engineer Youtube Videos`
+
 export const meta: MetaFunction = (data: any) => {
   return [
-    { title: 'FE Engineer Youtube channel videos | FE-Engineer' },
+    { title: TITLE },
     {
       name: 'description',
-      content: truncate(
-        `Youtube videos for FE-Engineer channel.  Videos cover a wide variety of topics including: AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, and more!`,
-        157
-      ),
+      content: truncate(DESCRIPTION, 157),
     },
     {
       name: 'keywords',
-      content: `AI, AMD GPU's, Ubuntu, Linux, Windows, Servers, Proxmox, Apache, Nextcloud, React Coding, FE Engineer Youtube, FE Engineer Youtube Videos`,
+      content: KEYWORDS,
     },
   ]
+}
+
+export const handle = {
+  schema: {
+    name: 'FE Engineer Youtube channel videos',
+    description: truncate(DESCRIPTION, 157),
+    keywords: KEYWORDS,
+    title: TITLE,
+  },
 }
 
 export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {

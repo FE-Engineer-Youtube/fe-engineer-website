@@ -39,32 +39,56 @@ export const meta: MetaFunction = ({ data }: any) => {
     },
     {
       'script:ld+json': {
-        '@context': 'https://schema.org/',
+        '@context': 'https://schema.org',
         '@type': ['VideoObject', 'LearningResource'],
+        '@id': `https://fe-engineer.com/videos/${data?.videoData?.items?.[0]?.id}#video`,
         name: title,
+
+        // Strongly recommended: page URL where the video is described
+        url: `https://fe-engineer.com/videos/${data?.videoData?.items?.[0]?.id}`,
+
         thumbnailUrl: thumbnails,
+
         uploadDate: snippet?.publishedAt,
-        contentUrl: `https://www.youtube.com/embed/${data?.videoData?.items[0]?.id}`,
-        description: description,
+
+        // Correct semantics
+        embedUrl: `https://www.youtube.com/embed/${data?.videoData?.items?.[0]?.id}`,
+        contentUrl: `https://www.youtube.com/watch?v=${data?.videoData?.items?.[0]?.id}`,
+
+        description: (
+          snippet?.localized?.description ??
+          snippet?.description ??
+          ''
+        )
+          .replace(/(\r\n|\n|\r|)\s+/gm, ' ')
+          .trim(),
+
         duration: contentDetails?.duration,
         learningResourceType: 'Problem walkthrough',
+        isPartOf: { '@id': 'https://fe-engineer.com/#website' },
+        potentialAction: {
+          '@type': 'WatchAction',
+          target: `https://www.youtube.com/watch?v=${data?.videoData?.items?.[0]?.id}`,
+        },
+
         interactionStatistic: [
           {
             '@type': 'InteractionCounter',
             interactionType: { '@type': 'CommentAction' },
-            userInteractionCount: +statistics?.commentCount,
+            userInteractionCount: Number(statistics?.commentCount ?? 0),
           },
           {
             '@type': 'InteractionCounter',
             interactionType: { '@type': 'WatchAction' },
-            userInteractionCount: +statistics?.viewCount,
+            userInteractionCount: Number(statistics?.viewCount ?? 0),
           },
           {
             '@type': 'InteractionCounter',
             interactionType: { '@type': 'LikeAction' },
-            userInteractionCount: +statistics?.likeCount,
+            userInteractionCount: Number(statistics?.likeCount ?? 0),
           },
         ],
+
         videoQuality: contentDetails?.definition,
       },
     },
@@ -72,14 +96,48 @@ export const meta: MetaFunction = ({ data }: any) => {
 }
 
 export const handle = {
-  breadcrumb: ({ data, params }: any) => (
-    <Link
-      className={classes.breadcrumbLink}
-      to={`/videos/${params?.video || 'videoid'}`}
-    >
-      {data?.videoData?.items[0]?.snippet?.title}
-    </Link>
-  ),
+  breadcrumb: ({ data, params }: any) => {
+    const id = params?.video
+    const snippet = data?.videoData?.items?.[0]?.snippet
+
+    const title = snippet?.localized?.title ?? snippet?.title ?? 'Video'
+
+    return (
+      <Link
+        className={classes.breadcrumbLink}
+        to={id ? `/videos/${id}` : '/videos'}
+      >
+        {title}
+      </Link>
+    )
+  },
+
+  schema: ({ data, params }: any) => {
+    const id = params?.video
+    const snippet = data?.videoData?.items?.[0]?.snippet
+
+    const title = snippet?.localized?.title ?? snippet?.title ?? 'Video'
+
+    const rawDesc =
+      snippet?.localized?.description ?? snippet?.description ?? ''
+
+    const description = truncate(
+      rawDesc.replace(/(\r\n|\n|\r|)\s+/gm, ' ').trim(),
+      157
+    )
+
+    const keywords = snippet?.tags?.join(', ') ?? ''
+
+    return {
+      name: `${title} | Video | FE-Engineer`,
+      description,
+      keywords,
+
+      // Signal to root: this WebPage's main entity is the page-local VideoObject
+      // Root should translate this into: { "@id": `${canonicalUrl}#video` }
+      mainEntity: 'video',
+    }
+  },
 }
 
 export const loader: LoaderFunction = async (args: any) => {

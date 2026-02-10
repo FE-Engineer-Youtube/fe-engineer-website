@@ -58,6 +58,11 @@ export const handle = {
       About
     </Link>
   ),
+  schema: {
+    about: 'person',
+    mainEntity: 'person',
+    name: 'About FE-Engineer',
+  },
 }
 
 const displayText = {
